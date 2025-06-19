@@ -53,8 +53,27 @@ cd hesiod-vcf9/
 
 Next, select from one of the following paths:
 
+| Path   | Description | Dependencies | 
+|--------|-------------|--------------|
+| Path 1 | [Build a New VCF 9 Configuration JSON File](#path-1-build-a-new-vcf-9-configuration-json-file) | Do this first - no dependencies. |
+| Path 2 | [Build VCF 9 Ready ESXi Hosts for Management Cluster](#path-2-build-vcf-9-ready-esxi-hosts-for-management-cluster) | VCF 9 Configuration File must be completed (Path 1) |
+| Path 3 | [Build VCF 9 Ready ESXi Hosts for VI clusters](#path-3-build-vcf-9-ready-esxi-hosts-for-vi-clusters) | VCF 9 must be installed (Path 2) |
+
+
+## PATH 1: Build a New VCF 9 Configuration JSON File
+
 ```
-python3 hesiod-vcf9.py
+python3 hesiod-vcf9.py -configjson
 ```
 
-*THIS REPOSITORY IS A WORK IN PROGRESS. STAY TUNED...*
+## PATH 2: Build VCF 9 Ready ESXi Hosts for Management Cluster 
+
+```
+python3 hesiod-vcf9.py -bringup
+```
+
+## PATH 3: Build VCF 9 Ready ESXi Hosts for VI Clusters 
+
+```
+python3 hesiod-vcf9.py -bringup
+```

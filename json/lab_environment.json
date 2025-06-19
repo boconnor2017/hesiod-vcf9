@@ -1,0 +1,120 @@
+{
+    "logs" : {
+        "test.py" : "_test.log",
+        "hesiod-vcf5.py" : "_hesiod-vcf9.log"
+    },
+    "physical_network" : [{
+        "default_gateway" : "<enter value here>",
+        "subnet_mask" : "<enter value here>",
+        "cidr" : "<enter value here>",
+        "network_type" : "physical subnet"
+    },
+    {
+        "default_gateway" : "<enter value here>",
+        "subnet_mask" : "<enter value here>",
+        "cidr" : "<enter value here>",
+        "network_type" : "VCF Management subnet"
+    },
+    {
+        "default_gateway" : "<enter value here>",
+        "subnet_mask" : "<enter value here>",
+        "cidr" : "<enter value here>",
+        "network_type" : "VCF vSAN subnet"
+    },
+    {
+        "default_gateway" : "<enter value here>",
+        "subnet_mask" : "<enter value here>",
+        "cidr" : "<enter value here>",
+        "network_type" : "VCF TEP subnet"
+    },
+    {
+        "default_gateway" : "<enter value here>",
+        "subnet_mask" : "<enter value here>",
+        "cidr" : "<enter value here>",
+        "network_type" : "VCF vMotion subnet"
+    }],
+
+    "physical_server" : [{
+        "username" : "root",
+        "password" : "<enter value here>",
+        "ip_address" : "<enter value here>",
+        "server_type" : "VCF Lab Nested Resources", 
+        "deploy_vms_to_this_network" : "VM Network", 
+        "deploy_vms_to_this_datastore" : "datastore1"
+    }],
+    
+    "universal_authentication" : {
+        "universal_password" : "<enter value here>",
+        "universal_long_password" : "<enter value here>",
+        "vcenter_administrator_sso_login" : "administrator@vsphere.local"
+    },
+
+    "dns" : [
+        "<enter value here>",
+        "<enter value here>"   
+    ],
+
+    "ntp" : {
+        "server" : "pool.ntp.org"
+    },
+
+    "domain" : "<enter value here>",
+
+    "vcenter_server" : {
+        "vm_name" : "<enter value here>", 
+        "fqdn" : "<enter value here>",
+        "ip" : "<enter value here>",
+        "deploy_to_physical_host" : 0,
+        "deploy_to_physical_network" : 0
+    },
+
+    "nested_esxi_servers" : {
+        "universal_specs" : {
+            "dir_path_to_ova_and_filename" : "/usr/local/drop/Nested_ESXi8.0u3_Appliance_Template_v1.ova",
+            "numCPU" : "8",
+            "memoryGB" : "32",
+            "harddiskcapacityGB" : "100"
+        },
+        "management_host_specs" : [{
+            "name_of_vm" : "<enter value here>",
+            "esxi_hostname" : "<enter value here>",
+            "esxi_ip_address" : "<enter value here>", 
+            "deploy_to_physical_host" : 0
+        },{
+            "name_of_vm" : "<enter value here>",
+            "esxi_hostname" : "<enter value here>",
+            "esxi_ip_address" : "<enter value here>", 
+            "deploy_to_physical_host" : 0
+        },{
+            "name_of_vm" : "<enter value here>",
+            "esxi_hostname" : "<enter value here>",
+            "esxi_ip_address" : "<enter value here>", 
+            "deploy_to_physical_host" : 0
+        },{
+            "name_of_vm" : "<enter value here>",
+            "esxi_hostname" : "<enter value here>",
+            "esxi_ip_address" : "<enter value here>", 
+            "deploy_to_physical_host" : 0
+        }],
+        "vi_host_specs" : [{
+            "name_of_vm" : "<enter value here>",
+            "esxi_hostname" : "<enter value here>",
+            "esxi_ip_address" : "<enter value here>", 
+            "deploy_to_physical_host" : 0
+        },{
+            "name_of_vm" : "<enter value here>",
+            "esxi_hostname" : "<enter value here>",
+            "esxi_ip_address" : "<enter value here>", 
+            "deploy_to_physical_host" : 0
+        },{
+            "name_of_vm" : "<enter value here>",
+            "esxi_hostname" : "<enter value here>",
+            "esxi_ip_address" : "<enter value here>", 
+            "deploy_to_physical_host" : 0
+        },{
+            "name_of_vm" : "<enter value here>",
+            "esxi_hostname" : "<enter value here>",
+            "esxi_ip_address" : "<enter value here>", 
+            "deploy_to_physical_host" : 0
+        }]}
+}
