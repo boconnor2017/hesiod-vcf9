@@ -51,4 +51,10 @@ cp -r hesiod/python/ hesiod-vcf9/hesiod
 cd hesiod-vcf9/
 ```
 
+Next, select from one of the following paths:
+
+```
+python3 hesiod-vcf9.py
+```
+
 *THIS REPOSITORY IS A WORK IN PROGRESS. STAY TUNED...*
