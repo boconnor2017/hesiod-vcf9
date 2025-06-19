@@ -8,7 +8,7 @@ Uses [Project Hesiod](https://github.com/boconnor2017/hesiod), a Photon based ap
 | Automation | Once deployed, the environment is designed to support automation development against a small scale VCF 9 ecosystem. This environment is not scaled for performance or capacity. |
 
 # Prerequisites
-The following physical equipment is **required** to run hesiod-vcf5:
+The following physical equipment is **required** to run hesiod-vcf9:
 
 | Requirement | Description |
 |-------------|-------------|
@@ -24,6 +24,11 @@ The following binaries are **required** to run hesiod-vcf5:
 | ESXi iso | version 9.0.0 is required (download from [Broadcom Portal](https://support.broadcom.com/web/ecx)) |
 | VCF 9 Installer | version 9.0.0 is required (download from [Broadcom Portal](https://support.broadcom.com/web/ecx)) |
 
+The following shared services are **required** to run hesiod-vcf9:
+
+| Requirement | Description |
+|-------------|-------------|
+| DNS | recommended: use [hesiod-dns](https://github.com/boconnor2017/hesiod-dns) to deploy and configure a PhotonOS Docker container running Tanium. |
 
 # Quick Start
 Deploy Photon OS OVA to the physical server. Follow the steps in the [Hesiod Photon OS Quick Start](https://github.com/boconnor2017/hesiod/blob/main/photon/readme.md) readme file to prep the Photon server for VCF. 
