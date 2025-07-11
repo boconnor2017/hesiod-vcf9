@@ -5,6 +5,7 @@ from hesiod import lib_logs_and_headers as liblog
 from hesiod import lib_paramiko as libpko 
 
 # Import VCF libraries
+from lib import vcf9_depot as depot
 
 # Import Standard Python libraries
 import os
@@ -27,3 +28,56 @@ err = "Succesfully initialized logs to "+logfile_name
 liblog.write_to_logs(err, logfile_name)
 err = ""
 liblog.write_to_logs(err, logfile_name)
+
+# Local Functions
+
+def _main_(args):
+    err = "Retreiving user inputs:"
+    liblog.write_to_logs(err, logfile_name)
+    arg_len = len(args)
+    err = "    "+str(arg_len)+" args passed."
+    liblog.write_to_logs(err, logfile_name)
+
+    err = "Initializing default user options."
+    liblog.write_to_logs(err, logfile_name)
+    user_options = ['n', 'n', 'n']
+
+    err = "Matching user inputs to hesiod menu."
+    liblog.write_to_logs(err, logfile_name)
+    if '--help' in args:
+        err = "    --help found. Initiating HELP menu."
+        liblog.write_to_logs(err, logfile_name)
+        help_menu()
+        sys.exit() 
+    if '-depot' in args:
+        err = "    -depot found. Initiating depot config."
+        liblog.write_to_logs(err, logfile_name)
+        depot_config()
+        sys.exit()
+    else :
+        err = "    No options found. Initiating HELP menu."
+        liblog.write_to_logs(err, logfile_name)
+        help_menu()
+        sys.exit()
+
+def depot_config():
+    print("Building VCF9 Offline Depot.")
+    print("")
+    err = "    Removing existing containers."
+    liblog.write_to_logs(err, logfile_name)
+    depot.remove_docker_container("hesiod-depot")
+    err = "    Creating Apache container."
+    liblog.write_to_logs(err, logfile_name)
+    depot.run_docker_container("httpd:latest", "hesiod-depot", "/usr/local/drop", "/usr/local/apache2/htdocs")
+
+
+def help_menu():
+    print("HELP MENU: hesiod-vcf9.py [options]")
+    print("Options are mandatory. You are seeing this menu because you either entered no options or an unknown option.")
+    print("Enter options 1x per run, do not add all parameters at once!")
+    print("--help option to see this menu.")
+    print("")
+    print("")
+
+    
+_main_(sys.argv)
