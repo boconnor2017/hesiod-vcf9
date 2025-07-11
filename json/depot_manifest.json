@@ -1,0 +1,31 @@
+{
+    "folder_structure" : [
+    {
+        "name" : "a",
+        "child" : [{
+            "name" : "a1",
+            "child" : [{}]
+        },
+        {
+            "name" : "a2",
+            "child" : [{}]
+        }]
+    },
+    {
+        "name" : "b",
+        "child" : [{}]
+    },
+    {
+        "name" : "c",
+        "child" : [{
+            "name" : "c1",
+            "child" : [{
+                "name" : "c1a", 
+                "child" : [{
+                    "name" : "c1a1",
+                    "child" : [{}]
+                }]
+            }]
+        }]
+    }]
+}

@@ -16,6 +16,8 @@ env_json_str = libjson.populate_var_from_json_file("json", "lab_environment.json
 env_json_py = libjson.load_json_variable(env_json_str)
 vcf_json_str = libjson.populate_var_from_json_file("json", "vcf9_config_template.json")
 vcf_json_py = libjson.load_json_variable(vcf_json_str)
+folder_structure_json_str = libjson.populate_var_from_json_file("json", "depot_manifest.json")
+folder_structure_json_py =libjson.load_json_variable(folder_structure_json_str)
 this_script_name = os.path.basename(__file__)
 logfile_name = env_json_py["logs"][this_script_name]
 
@@ -69,6 +71,11 @@ def depot_config():
     err = "    Creating Apache container."
     liblog.write_to_logs(err, logfile_name)
     depot.run_docker_container("httpd:latest", "hesiod-depot", "/usr/local/drop", "/usr/local/apache2/htdocs")
+    err = "    Creating VCF9 Folder structure."
+    liblog.write_to_logs(err, logfile_name)
+    err = "    "+depot.create_depot_parent_folder("/usr/local/drop/VCF9")
+    liblog.write_to_logs(err, logfile_name)
+    depot.create_depot_sub_folders("/usr/local/drop/VCF9", folder_structure_json_py)
 
 
 def help_menu():

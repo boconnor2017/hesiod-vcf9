@@ -11,6 +11,32 @@ import urllib
 import requests
 import docker 
 
+def create_depot_parent_folder(dir_path):
+    #Format of dir_path: /usr/local/drop/newfoldername
+    try:
+        os.mkdir(dir_path)
+        return "Success!"
+    except FileExistsError:
+        return "ERR: Directory Already Exists."
+    except PermissionError:
+        return "ERR: Permission Denied."
+    except Exception as e:
+        return "ERR: An exception has occurred."
+
+# THIS NEEDS TO BE FIXED # # # # # # # # # # # # # # # # # 
+def create_depot_sub_folders(dir_path, folder_structure_json_py):
+    #Convert the json to a python object before passing into this function
+    for folder in folder_structure_json_py["folder_structure"]:
+        new_folder_name = folder.get("name")
+        if new_folder_name:
+            new_path = os.path.join(dir_path, new_folder_name)
+            os.makedirs(new_path, exist_ok=True)
+            subfolders = folder.get("child", [])
+            if subfolders:
+                create_depot_sub_folders(subfolders, new_path)
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+
 def get_docker_container(container_name):
     client = docker.from_env()
     container = client.containers.get(container_name)
