@@ -55,25 +55,62 @@ Next, select from one of the following paths:
 
 | Path   | Description | Dependencies | 
 |--------|-------------|--------------|
-| Path 1 | [Build a New VCF 9 Configuration JSON File](#path-1-build-a-new-vcf-9-configuration-json-file) | Do this first - no dependencies. |
-| Path 2 | [Build VCF 9 Ready ESXi Hosts for Management Cluster](#path-2-build-vcf-9-ready-esxi-hosts-for-management-cluster) | VCF 9 Configuration File must be completed (Path 1) |
-| Path 3 | [Build VCF 9 Ready ESXi Hosts for VI clusters](#path-3-build-vcf-9-ready-esxi-hosts-for-vi-clusters) | VCF 9 must be installed (Path 2) |
+| Path 1 | Build a New VCF 9 Configuration JSON File | Do this first - no dependencies. Save the populated json file to a repository for future use. |
+| Path 2 | Document VCF 9 Configuration JSON File as Markdown | When your configuration file is populated, use this path to convert the parameters from the JSON into a Markdown file. This is helpful to document configuration details and to validate configuration inconsistencies before deploying the platform. |
+| Path 3 | Deploy an Offline Depot to Store Binaries| Use this path to create an Offline Depot to store VCF binary files. Binaries will need to be downloaded manually using appropriate entitlements. |
+| Path 4 | Build a VCF 9 Ready Nested Management Cluster | Deploys and configures 4x nested ESXi 9 hosts. These hosts will be the target for the VCF 9 installation process. |
+| Path 5 | Build a VCF 9 Ready Nested VI Cluster | Deploys and configures 4x nested ESXi 9 hosts. These hosts will be the target for VCF 9 workloads. This is useful capacity for automation, operations, and other services use cases such as VMaaS, CaaS, DBaaS, LBaaS, FWaaS, and K8aaS. |
+
 
 
 ## PATH 1: Build a New VCF 9 Configuration JSON File
 
+Run the following command from Photon:
 ```
 python3 hesiod-vcf9.py -configjson
 ```
 
-## PATH 2: Build VCF 9 Ready ESXi Hosts for Management Cluster 
+## PATH 2: Document VCF 9 Configuration JSON File as Markdown
 
+Run the following command from Photon:
 ```
-python3 hesiod-vcf9.py -bringup
+python3 hesiod-vcf9.py -json2md myconfigfile.json mydocfile.md
 ```
 
-## PATH 3: Build VCF 9 Ready ESXi Hosts for VI Clusters 
+## PATH 3: Deploy an Offline Depot to Store Binaries
 
+* Step 1: Deploy a new PhotonOS VM with 100GB vDisk. ssh to the new VM and execute the remaining steps.
+* Step 2: Repartition the disk:
+    * Run fdisk: `fdisk /dev/sda/`
+    * List Partitions: `p`
+    * Delete Partition: `d`
+    * Number 2: `2`
+    * New Partition: `n`
+    * Number 2: `n`
+    * Start value next to sda2: `30720`
+    * End value (use the default): `104857566`
+    * Do not remove signature: `N`
+    * List Partitions (you should see new size next to Linux Filesystem): `p`
+    * Verify Partition data: `v`
+    * Write table to disk: `w`
+    * Run fdisk: `dev/sda`
+    * Confirm that sda2 is now resized appropriately
+    * Quit: `q`
+* Step 3: Follow [Hesiod Photon OS Quick Start](https://github.com/boconnor2017/hesiod/blob/main/photon/readme.md) steps to prep the Photon server for VCF
+* Step 4: Clone this repo
 ```
-python3 hesiod-vcf9.py -bringup
+cd /usr/local/
+```
+```
+git clone https://github.com/boconnor2017/hesiod-vcf9
+```
+```
+cp -r hesiod/python/ hesiod-vcf9/hesiod
+```
+```
+cd hesiod-vcf9/
+```
+* Step 5: Create the Offline Depot Web Service and File structure
+```
+python3 hesiod-vcf9.py -depot
 ```
