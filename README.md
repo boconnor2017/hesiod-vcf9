@@ -93,7 +93,7 @@ python3 hesiod-vcf9.py -json2md myconfigfile.json mydocfile.md
     * List Partitions (you should see new size next to Linux Filesystem): `p`
     * Verify Partition data: `v`
     * Write table to disk: `w`
-    * Run fdisk: `dev/sda`
+    * Run fdisk: `/dev/sda`
     * Confirm that sda2 is now resized appropriately
     * Quit: `q`
 * Step 3: Follow [Hesiod Photon OS Quick Start](https://github.com/boconnor2017/hesiod/blob/main/photon/readme.md) steps to prep the Photon server for VCF
