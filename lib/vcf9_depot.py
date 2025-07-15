@@ -23,19 +23,24 @@ def create_depot_parent_folder(dir_path):
     except Exception as e:
         return "ERR: An exception has occurred."
 
-# THIS NEEDS TO BE FIXED # # # # # # # # # # # # # # # # # 
 def create_depot_sub_folders(dir_path, folder_structure_json_py):
     #Convert the json to a python object before passing into this function
-    for folder in folder_structure_json_py["folder_structure"]:
-        new_folder_name = folder.get("name")
-        if new_folder_name:
-            new_path = os.path.join(dir_path, new_folder_name)
-            os.makedirs(new_path, exist_ok=True)
-            subfolders = folder.get("child", [])
-            if subfolders:
-                create_depot_sub_folders(subfolders, new_path)
-
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+    errlist = []
+    for i in range(len(folder_structure_json_py["folder_structure"])):
+        try: 
+            os.makedirs(dir_path+"/"+folder_structure_json_py["folder_structure"][i]["path"])
+            errlist.append(folder_structure_json_py["folder_structure"][i]["path"]+" is a Success!")
+        except FileExistsError:
+            errlist.append(dir_path+"/"+folder_structure_json_py["folder_structure"][i]["path"]+" Already Exists.")
+        except PermissionError:
+            errlist.append("ERR: Permission Denied during creation of "+dir_path+"/"+folder_structure_json_py["folder_structure"][i]["path"])
+        except Exception as e:
+            errlist.append("ERR: An exception has occurred during creation of "+dir_path+"/"+folder_structure_json_py["folder_structure"][i]["path"])
+    
+    errstatement = ""
+    for e in range(len(errlist)):
+        errstatement = errstatement+"; "+errlist[e]
+    return errstatement
 
 def get_docker_container(container_name):
     client = docker.from_env()

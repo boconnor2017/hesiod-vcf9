@@ -81,20 +81,20 @@ python3 hesiod-vcf9.py -json2md myconfigfile.json mydocfile.md
 
 * Step 1: Deploy a new PhotonOS VM with 100GB vDisk. ssh to the new VM and execute the remaining steps.
 * Step 2: Repartition the disk:
-    * Run fdisk: `fdisk /dev/sda/`
+    * Run fdisk: `fdisk /dev/sda`
     * List Partitions: `p`
     * Delete Partition: `d`
     * Number 2: `2`
     * New Partition: `n`
-    * Number 2: `n`
+    * Number 2: `2`
     * Start value next to sda2: `30720`
     * End value (use the default): `104857566`
     * Do not remove signature: `N`
     * List Partitions (you should see new size next to Linux Filesystem): `p`
     * Verify Partition data: `v`
     * Write table to disk: `w`
-    * Run fdisk: `/dev/sda`
-    * Confirm that sda2 is now resized appropriately
+    * Rerun `fdisk /dev/sda`
+    * Confirm that sda2 is now resized appropriately: `p`
     * Quit: `q`
 * Step 3: Follow [Hesiod Photon OS Quick Start](https://github.com/boconnor2017/hesiod/blob/main/photon/readme.md) steps to prep the Photon server for VCF
 * Step 4: Clone this repo

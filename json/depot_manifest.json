@@ -1,31 +1,8 @@
 {
     "folder_structure" : [
-    {
-        "name" : "a",
-        "child" : [{
-            "name" : "a1",
-            "child" : [{}]
-        },
-        {
-            "name" : "a2",
-            "child" : [{}]
-        }]
-    },
-    {
-        "name" : "b",
-        "child" : [{}]
-    },
-    {
-        "name" : "c",
-        "child" : [{
-            "name" : "c1",
-            "child" : [{
-                "name" : "c1a", 
-                "child" : [{
-                    "name" : "c1a1",
-                    "child" : [{}]
-                }]
-            }]
-        }]
-    }]
-}
+    { "path" : "a" },
+    { "path" : "b/b1/b1a" },
+    { "path" : "b/b2" },
+    { "path" : "c/c1/c1a/c1a1" },
+    { "path" : "c/c2/c2a/c2a1" }
+]}

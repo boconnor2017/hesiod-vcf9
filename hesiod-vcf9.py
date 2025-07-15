@@ -75,7 +75,8 @@ def depot_config():
     liblog.write_to_logs(err, logfile_name)
     err = "    "+depot.create_depot_parent_folder("/usr/local/drop/VCF9")
     liblog.write_to_logs(err, logfile_name)
-    depot.create_depot_sub_folders("/usr/local/drop/VCF9", folder_structure_json_py)
+    err = "    "+depot.create_depot_sub_folders("/usr/local/drop/VCF9", folder_structure_json_py)
+    liblog.write_to_logs(err, logfile_name)
 
 
 def help_menu():
