@@ -1,7 +1,7 @@
 {
     "logs" : {
         "test.py" : "_test.log",
-        "hesiod-vcf5.py" : "_hesiod-vcf9.log"
+        "hesiod-vcf9.py" : "_hesiod-vcf9.log"
     },
     "physical_network" : [{
         "default_gateway" : "<enter value here>",

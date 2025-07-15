@@ -1,8 +1,14 @@
 {
     "folder_structure" : [
-    { "path" : "a" },
-    { "path" : "b/b1/b1a" },
-    { "path" : "b/b2" },
-    { "path" : "c/c1/c1a/c1a1" },
-    { "path" : "c/c2/c2a/c2a1" }
+    { "path" : "PROD/COMP/ESX_HOST" },
+    { "path" : "PROD/COMP/NSX_T_MANAGER" },
+    { "path" : "PROD/COMP/SDDC_MANAGER_VCF" },
+    { "path" : "PROD/COMP/VCENTER" },
+    { "path" : "PROD/COMP/VCF_OPS_CLOUD_PROXY" },
+    { "path" : "PROD/COMP/VRA" },
+    { "path" : "PROD/COMP/VROPS" },
+    { "path" : "PROD/COMP/VRSLCM" },
+    { "path" : "PROD/metadata/manifest/v1" },
+    { "path" : "PROD/metadata/productVersionCatalog/v1" },
+    { "path" : "PROD/vsan/hcl" }
 ]}

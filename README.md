@@ -114,3 +114,28 @@ cd hesiod-vcf9/
 ```
 python3 hesiod-vcf9.py -depot
 ```
+* Step 6: Upload (sftp) binaries to their associated folder
+```
+VCF9
+└── PROD
+    ├── COMP
+        ├── ESX_HOST
+        ├── NSX_T_MANAGER
+        │   ├── VMware-NSX-T-9.0.0.0.24733065.vlcp
+        │   └── nsx-unified-appliance-9.0.0.0.24733065.ova
+        ├── SDDC_MANAGER_VCF
+        │   ├── Compatibility
+        │   │   └── VmwareCompatibilityData.json
+        │   └── VCF-SDDC-Manager-Appliance-9.0.0.0.24703748.ova
+        ├── VCENTER
+        │   └── VMware-VCSA-all-9.0.0.0.24755230.iso
+        ├── VCF_OPS_CLOUD_PROXY
+        │   └── Operations-Cloud-Proxy-9.0.0.0.24695833.ova
+        ├── VRA
+        │   └── vmsp-vcfa-combined-9.0.0.0.24701403.tar
+        ├── VROPS
+        │   └── Operations-Appliance-9.0.0.0.24695812.ova
+        └── VRSLCM
+            └── VCF-OPS-Lifecycle-Manager-Appliance-9.0.0.0.24695816.ova
+
+```

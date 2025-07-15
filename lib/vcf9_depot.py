@@ -65,3 +65,12 @@ def run_docker_container(image_name, container_name, local_folder, container_fol
         detach=True
     )
     return container
+
+def set_folder_permissions(dir_path, permission):
+    for root, dirs, files in os.walk(dir_path):
+        for dirname in dirs:
+            dirpath = os.path.join(root, dirname)
+            os.chmod(dirpath, permission)
+        #for filename in files:
+        #    filepath = os.path.join(root, filename)
+        #    os.chmod(filepath, permission)
