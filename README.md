@@ -96,6 +96,9 @@ python3 hesiod-vcf9.py -json2md myconfigfile.json mydocfile.md
     * Rerun `fdisk /dev/sda`
     * Confirm that sda2 is now resized appropriately: `p`
     * Quit: `q`
+    * Check the filesystem size (GBs): `df -BG`
+    * Resize the filesystem: `resize2fs /dev/sda2`
+    * Recheck the filesystem size (GBs): `df -BG`
 * Step 3: Follow [Hesiod Photon OS Quick Start](https://github.com/boconnor2017/hesiod/blob/main/photon/readme.md) steps to prep the Photon server for VCF
 * Step 4: Clone this repo
 ```
