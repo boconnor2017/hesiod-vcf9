@@ -3,6 +3,7 @@
     { "path" : "PROD/COMP/ESX_HOST" },
     { "path" : "PROD/COMP/NSX_T_MANAGER" },
     { "path" : "PROD/COMP/SDDC_MANAGER_VCF" },
+    { "path" : "PROD/COMP/SDDC_MANAGER_VCF/Compatibility" },
     { "path" : "PROD/COMP/VCENTER" },
     { "path" : "PROD/COMP/VCF_OPS_CLOUD_PROXY" },
     { "path" : "PROD/COMP/VRA" },
