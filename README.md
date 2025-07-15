@@ -128,8 +128,6 @@ VCF9
         │   ├── VMware-NSX-T-9.0.0.0.24733065.vlcp
         │   └── nsx-unified-appliance-9.0.0.0.24733065.ova
         ├── SDDC_MANAGER_VCF
-        │   ├── Compatibility
-        │   │   └── VmwareCompatibilityData.json
         │   └── VCF-SDDC-Manager-Appliance-9.0.0.0.24703748.ova
         ├── VCENTER
         │   └── VMware-VCSA-all-9.0.0.0.24755230.iso
