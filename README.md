@@ -114,7 +114,7 @@ cd hesiod-vcf9/
 ```
 python3 hesiod-vcf9.py -depot
 ```
-* Step 6: Upload (sftp) binaries to their associated folder
+* Step 6: Upload (sftp) binaries to their associated folder under `/usr/local/drop`
 ```
 VCF9
 └── PROD
