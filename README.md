@@ -115,7 +115,7 @@ cd hesiod-vcf9/
 python3 hesiod-vcf9.py -depot
 ```   
 
-Using a browser, you can now view your Depot: `http://<IP ADDRESS>:8080
+Using a browser, you can now view your Depot at `http://<IP ADDRESS>:8080`
 
 
 * Step 6: Upload (sftp) binaries to their associated folder under `/usr/local/drop`
