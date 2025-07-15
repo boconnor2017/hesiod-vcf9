@@ -32,7 +32,6 @@ err = ""
 liblog.write_to_logs(err, logfile_name)
 
 # Local Functions
-
 def _main_(args):
     err = "Retreiving user inputs:"
     liblog.write_to_logs(err, logfile_name)
@@ -76,6 +75,10 @@ def depot_config():
     err = "    "+depot.create_depot_parent_folder("/usr/local/drop/VCF9")
     liblog.write_to_logs(err, logfile_name)
     err = "    "+depot.create_depot_sub_folders("/usr/local/drop/VCF9", folder_structure_json_py)
+    liblog.write_to_logs(err, logfile_name)
+    err = "    Editing permissions of folder structure."
+    liblog.write_to_logs(err, logfile_name)
+    err = libgen.run_local_shell_cmd('chmod -R 755 /usr/local/drop/')
     liblog.write_to_logs(err, logfile_name)
 
 
