@@ -1,5 +1,5 @@
 # Hesiod VCF9
-Uses [Project Hesiod](https://github.com/boconnor2017/hesiod), a Photon based approach to initiate and launch a VCF 9 bringup ready environment. The purpose of this project is to facilitate hands on experience with the VCF 9 installation process using a nested environment. There are two goals with this project:
+Uses [Project Hesiod](https://github.com/boconnor2017/hesiod), a Photon based approach to initiate and launch an immutable VCF 9 bringup ready environment. The purpose of this project is to facilitate hands on experience with the VCF 9 installation process using a nested environment. There are two goals with this project:
 
 | Goal | Description |
 |------|-------------|
@@ -16,13 +16,19 @@ The following physical equipment is **required** to run hesiod-vcf9:
 | Physical ESXi | at least 1x physical server. See [Lab Sizing Guide](#lab-sizing-guide) below. |
 | DNS Server | recommended: use [hesiod-dns](https://github.com/boconnor2017/hesiod-dns) to spin up an immutable DNS server and configure necessary DNS entries for VCF |
 
-The following binaries are **required** to run hesiod-vcf5:
+The following binaries are **required** to run hesiod-vcf9:
 
 | Requirement | Description |
 |-------------|-------------|
 | PhotonOS OVA | version 5.0 recommended (download from [VMware GitHub](https://vmware.github.io/photon/)) |
-| ESXi iso | version 9.0.0 is required (download from [Broadcom Portal](https://support.broadcom.com/web/ecx)) |
-| VCF 9 Installer | version 9.0.0 is required (download from [Broadcom Portal](https://support.broadcom.com/web/ecx)) |
+| ESXi 9 (iso) | version 9.0.0 is required (download from [Broadcom Portal](https://support.broadcom.com/web/ecx)) |
+| VCF 9 Installer (ova) | version 9.0.0 is required (download from [Broadcom Portal](https://support.broadcom.com/web/ecx)) |
+| VCF 9 NSX Manager (ova) | version 9.0.0 is required (download from [Broadcom Portal](https://support.broadcom.com/web/ecx)) |
+| VCF 9 NSX Content Pack for Cloud Foundation Operations (vlcp) | version 9.0.0 is required (download from [Broadcom Portal](https://support.broadcom.com/web/ecx)) |
+| VCF 9 vCenter (iso) | version 9.0.0 is required (download from [Broadcom Portal](https://support.broadcom.com/web/ecx)) |
+| VCF 9 Operations (ova) | version 9.0.0 is required (download from [Broadcom Portal](https://support.broadcom.com/web/ecx)) |
+| VCF 9 Operations Lifecycle Manager (ova) | version 9.0.0 is required (download from [Broadcom Portal](https://support.broadcom.com/web/ecx)) |
+| VCF 9 Automation (tar) | version 9.0.0 is required (download from [Broadcom Portal](https://support.broadcom.com/web/ecx)) |
 
 The following shared services are **required** to run hesiod-vcf9:
 
@@ -79,7 +85,7 @@ python3 hesiod-vcf9.py -json2md myconfigfile.json mydocfile.md
 
 ## PATH 3: Deploy an Offline Depot to Store Binaries
 
-* Step 1: Deploy a new PhotonOS VM with 100GB vDisk. ssh to the new VM and execute the remaining steps.
+* Step 1: Deploy a new PhotonOS VM with **100GB** vDisk. ssh to the new VM and execute the remaining steps.
 * Step 2: Repartition the disk:
     * Run fdisk: `fdisk /dev/sda`
     * List Partitions: `p`
@@ -134,8 +140,6 @@ VCF9
         │   └── VCF-SDDC-Manager-Appliance-9.0.0.0.24703748.ova
         ├── VCENTER
         │   └── VMware-VCSA-all-9.0.0.0.24755230.iso
-        ├── VCF_OPS_CLOUD_PROXY
-        │   └── Operations-Cloud-Proxy-9.0.0.0.24695833.ova
         ├── VRA
         │   └── vmsp-vcfa-combined-9.0.0.0.24701403.tar
         ├── VROPS
