@@ -64,12 +64,23 @@ def _main_(args):
 def depot_config():
     print("Building VCF9 Offline Depot.")
     print("")
+    #TEMP START # # # # # # # # # # # # # # #
+    err = "    Generating basic auth with htpasswd."
+    liblog.write_to_logs(err, logfile_name)
+    htusername = "test04"
+    htpassword = "somethingrandom"
+    htpasswd_cmd = []
+    htpasswd_cmd = "htpasswd", "-cb", "/usr/local/drop/htpasswd/.htpasswd", htusername, htpassword
+    libgen.run_local_shell_cmd(htpasswd_cmd)
+    #TEMP END # # # # # # # # # # # # # # #
     err = "    Removing existing containers."
     liblog.write_to_logs(err, logfile_name)
     depot.remove_docker_container("hesiod-depot")
     err = "    Creating Apache container."
     liblog.write_to_logs(err, logfile_name)
-    depot.run_docker_container("httpd:latest", "hesiod-depot", "/usr/local/drop", "/usr/local/apache2/htdocs")
+    htpasswd_path = "/usr/local/drop/htpasswd"
+    httpd_conf_path = "/usr/local/drop/httpd_conf"
+    depot.run_docker_container("httpd:latest", "hesiod-depot", "/usr/local/drop", "/usr/local/apache2/htdocs", htpasswd_path, httpd_conf_path)
     err = "    Creating VCF9 Folder structure."
     liblog.write_to_logs(err, logfile_name)
     err = "    "+depot.create_depot_parent_folder("/usr/local/drop/VCF9")
@@ -78,7 +89,6 @@ def depot_config():
     liblog.write_to_logs(err, logfile_name)
     err = "    Editing permissions of folder structure."
     liblog.write_to_logs(err, logfile_name)
-    #depot.set_folder_permissions("/usr/local/drop/", 0o755)
     permissions_cmd = []
     permissions_cmd = "chmod", "-R", "755", "/usr/local/drop/"
     libgen.run_local_shell_cmd(permissions_cmd)

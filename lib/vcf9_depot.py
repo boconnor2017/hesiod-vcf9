@@ -55,13 +55,17 @@ def remove_docker_container(container_name):
     except docker.errors.NotFound:
         pass
 
-def run_docker_container(image_name, container_name, local_folder, container_folder):
+def run_docker_container(image_name, container_name, local_folder, container_folder, htpasswd_path, httpd_conf_path):
     client = docker.from_env()
     container = client.containers.run(
         image_name,
         name=container_name,
         ports={"80/tcp": 8080},  # Map port 80 in container to 8080 on host
-        volumes={local_folder: {'bind': container_folder, 'mode': 'rw'}},
+        volumes={
+            local_folder: {'bind': container_folder, 'mode': 'rw'},
+            htpasswd_path: {'bind': '/usr/local/apache2/conf/htpasswd/', 'mode': 'ro'},
+            httpd_conf_path: {'bind': '/usr/local/apache2/conf/httpd_conf/', 'mode': 'ro'}
+        },
         detach=True
     )
     return container
