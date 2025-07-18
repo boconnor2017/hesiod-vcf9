@@ -93,6 +93,11 @@ def depot_config():
     index_cmd = []
     index_cmd = "cp", "auth_conf/index.html", httpd_local_volume_path
     libgen.run_local_shell_cmd(index_cmd)
+    err = "    Copying index.html to "+httpd_local_volume_path
+    liblog.write_to_logs(err, logfile_name)
+    img_cmd = []
+    img_cmd = "cp", "auth_conf/*.png", httpd_local_volume_path
+    libgen.run_local_shell_cmd(img_cmd)
     err = "    Editing permissions of folder structure."
     liblog.write_to_logs(err, logfile_name)
     permissions_cmd = []
