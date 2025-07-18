@@ -78,7 +78,10 @@ def depot_config():
     liblog.write_to_logs(err, logfile_name)
     err = "    Editing permissions of folder structure."
     liblog.write_to_logs(err, logfile_name)
-    depot.set_folder_permissions("/usr/local/drop", 0o755)
+    #depot.set_folder_permissions("/usr/local/drop/", 0o755)
+    permissions_cmd = []
+    permissions_cmd = "chmod", "-R", "755", "/usr/local/drop/"
+    libgen.run_local_shell_cmd(permissions_cmd)
     err = "Depot created."
     liblog.write_to_logs(err, logfile_name)
     
