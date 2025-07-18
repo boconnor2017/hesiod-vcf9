@@ -63,8 +63,8 @@ def run_docker_container(image_name, container_name, local_folder, container_fol
         ports={"80/tcp": 8080},  # Map port 80 in container to 8080 on host
         volumes={
             local_folder: {'bind': container_folder, 'mode': 'rw'},
-            htpasswd_path: {'bind': '/usr/local/apache2/conf/htpasswd/', 'mode': 'ro'},
-            httpd_conf_path: {'bind': '/usr/local/apache2/conf/httpd_conf/', 'mode': 'ro'}
+            htpasswd_path: {'bind': '/usr/local/apache2/conf/.htpasswd', 'mode': 'ro'},
+            httpd_conf_path: {'bind': '/usr/local/apache2/conf/httpd-auth.conf', 'mode': 'ro'}
         },
         detach=True
     )

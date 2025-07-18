@@ -64,13 +64,16 @@ def _main_(args):
 def depot_config():
     print("Building VCF9 Offline Depot.")
     print("")
-    #TEMP START # # # # # # # # # # # # # # #
     err = "    Generating basic auth with htpasswd."
     liblog.write_to_logs(err, logfile_name)
-    htusername = "test04"
-    htpassword = "somethingrandom"
+    #TEMP START # # # # # # # # # # # # # # #
+    htusername = "test04" #Pull from JSON
+    htpassword = "somethingrandom" #Pull from JSON
+    htpasswd_path = "/usr/local/drop/htpasswd/.htpasswd" #Pull from JSON
+    httpd_conf_path = "/usr/local/drop/httpd_conf/http-auth.conf" #Copy this from auth_conf
+    httpd_local_volume_path = "/usr/local/drop"
     htpasswd_cmd = []
-    htpasswd_cmd = "htpasswd", "-cb", "/usr/local/drop/htpasswd/.htpasswd", htusername, htpassword
+    htpasswd_cmd = "htpasswd", "-cb", htpasswd_path, htusername, htpassword
     libgen.run_local_shell_cmd(htpasswd_cmd)
     #TEMP END # # # # # # # # # # # # # # #
     err = "    Removing existing containers."
@@ -78,15 +81,18 @@ def depot_config():
     depot.remove_docker_container("hesiod-depot")
     err = "    Creating Apache container."
     liblog.write_to_logs(err, logfile_name)
-    htpasswd_path = "/usr/local/drop/htpasswd"
-    httpd_conf_path = "/usr/local/drop/httpd_conf"
-    depot.run_docker_container("httpd:latest", "hesiod-depot", "/usr/local/drop", "/usr/local/apache2/htdocs", htpasswd_path, httpd_conf_path)
+    depot.run_docker_container("httpd:latest", "hesiod-depot", httpd_local_volume_path, "/usr/local/apache2/htdocs", htpasswd_path, httpd_conf_path)
     err = "    Creating VCF9 Folder structure."
     liblog.write_to_logs(err, logfile_name)
-    err = "    "+depot.create_depot_parent_folder("/usr/local/drop/VCF9")
+    err = "    "+depot.create_depot_parent_folder(httpd_local_volume_path+"/VCF9")
     liblog.write_to_logs(err, logfile_name)
-    err = "    "+depot.create_depot_sub_folders("/usr/local/drop/VCF9", folder_structure_json_py)
+    err = "    "+depot.create_depot_sub_folders(httpd_local_volume_path+"/VCF9", folder_structure_json_py)
     liblog.write_to_logs(err, logfile_name)
+    err = "    Copying index.html to "+httpd_local_volume_path
+    liblog.write_to_logs(err, logfile_name)
+    index_cmd = []
+    index_cmd = "cp", "auth_conf/index.html", httpd_local_volume_path
+    libgen.run_local_shell_cmd(index_cmd)
     err = "    Editing permissions of folder structure."
     liblog.write_to_logs(err, logfile_name)
     permissions_cmd = []
