@@ -10,6 +10,10 @@ import shutil
 import urllib
 import requests
 import docker 
+import subprocess
+
+def copy_files(src_path, target_path):
+    shutil.copy2(src_path, target_path)
 
 def create_depot_parent_folder(dir_path):
     #Format of dir_path: /usr/local/drop/newfoldername
@@ -47,6 +51,16 @@ def get_docker_container(container_name):
     container = client.containers.get(container_name)
     return container
 
+def generate_ssl_cert(cert_path, key_path):
+    #Runs openssl on the Photon OS
+    subprocess.run([
+        'openssl', 'req', '-x509', '-nodes', '-days', '365',
+        '-newkey', 'rsa:2048',
+        '-keyout', key_path,
+        '-out', cert_path,
+        '-subj', '/CN=localhost'
+    ], check=True)
+
 def remove_docker_container(container_name):
     try:
         container = get_docker_container(container_name)
@@ -55,17 +69,33 @@ def remove_docker_container(container_name):
     except docker.errors.NotFound:
         pass
 
-def run_docker_container(image_name, container_name, local_folder, container_folder, htpasswd_path, httpd_conf_path):
+def run_httpd_docker_container(image_name, container_name, local_folder, httpd_conf_path):
     client = docker.from_env()
     container = client.containers.run(
         image_name,
         name=container_name,
         ports={"80/tcp": 8080},  # Map port 80 in container to 8080 on host
         volumes={
-            local_folder: {'bind': container_folder, 'mode': 'rw'},
-            htpasswd_path: {'bind': '/usr/local/apache2/conf/.htpasswd', 'mode': 'ro'},
+            local_folder: {'bind': "/usr/local/apache2/htdocs", 'mode': 'rw'},
             httpd_conf_path: {'bind': '/usr/local/apache2/conf/httpd-auth.conf', 'mode': 'ro'}
         },
+        detach=True
+    )
+    return container
+
+def run_nginx_docker_container(image_name, container_name, nginx_conf_path, cert_path, key_path, htpasswd_path):
+    client = docker.from_env()
+    container = client.containers.run(
+        image=image_name,
+        name=container_name,
+        ports={'443/tcp': '8443'}, # Map port 443 in container to 8443 on host
+        volumes={
+            nginx_conf_path: {'bind': '/etc/nginx/nginx.conf', 'mode': 'ro'},
+            cert_path: {'bind': '/etc/nginx/cert.pem', 'mode': 'ro'},
+            key_path: {'bind': '/etc/nginx/key.pem', 'mode': 'ro'},
+            htpasswd_path: {'bind': '/etc/nginx/.htpasswd', 'mode': 'ro'},
+        },
+        network_mode='bridge',  
         detach=True
     )
     return container
