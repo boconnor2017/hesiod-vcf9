@@ -11,6 +11,8 @@ import urllib
 import requests
 import docker 
 import subprocess
+import crypt
+import getpass
 
 def copy_files(src_path, target_path):
     shutil.copy2(src_path, target_path)
@@ -61,6 +63,12 @@ def get_docker_container(container_name):
     client = docker.from_env()
     container = client.containers.get(container_name)
     return container
+
+def generate_htpasswd(ht_username, ht_password, ht_path):
+    #ht_path format: /foo/bar/.htpasswd
+    hashvar = crypt.crypt(ht_password, crypt.mksalt(crypt.METHOD_SHA512))
+    with open(ht_path, "w") as htfile:
+        htfile.write(f"{ht_username}:{hashvar}\n")
 
 def generate_ssl_cert(cert_path, key_path):
     #Runs openssl on the Photon OS

@@ -18,6 +18,7 @@
         "local_volume_path" : "/usr/local/drop",
         "username" : "vcf",
         "password" : "VMware123!",
+        "htpasswd_folder_path" : "/usr/local/drop/htpasswd",
         "htpasswd_path" : "/usr/local/drop/htpasswd/.htpasswd",
         "ssl_folder_path" : "/usr/local/drop/certs",
         "ssl_cert_path" : "/usr/local/drop/certs/cert.pem",
@@ -29,7 +30,8 @@
         "nginx_folder_path" : "/usr/local/drop/nginx_conf",
         "nginx_conf_path" : "/usr/local/drop/nginx_conf/nginx.conf",
         "nginx_container_name" : "hesiod-reverse-proxy",
-        "nginx_container_image" : "nginx:latest"
+        "nginx_container_image" : "nginx:latest",
+        "docker_network_name" : "depot-local-bridge-net01"
     }
 
 }

@@ -67,14 +67,12 @@ def depot_config():
     err = "    HOST PREP: Creating SSL and conf Folder structure."
     liblog.write_to_logs(err, logfile_name)
     depot.create_depot_parent_folder(depot_manifest_json_py["depot_config"]["ssl_folder_path"])
-    depot.create_depot_parent_folder(depot_manifest_json_py["depot_config"]["htpasswd_path"])
+    depot.create_depot_parent_folder(depot_manifest_json_py["depot_config"]["htpasswd_folder_path"])
     depot.create_depot_parent_folder(depot_manifest_json_py["depot_config"]["httpd_folder_path"])
     depot.create_depot_parent_folder(depot_manifest_json_py["depot_config"]["nginx_folder_path"])
     err = "    HOST PREP: Generating basic auth with htpasswd."
     liblog.write_to_logs(err, logfile_name)
-    htpasswd_cmd = []
-    htpasswd_cmd = "htpasswd", "-cb", depot_manifest_json_py["depot_config"]["htpasswd_path"], depot_manifest_json_py["depot_config"]["username"], depot_manifest_json_py["depot_config"]["password"]
-    libgen.run_local_shell_cmd(htpasswd_cmd)
+    depot.generate_htpasswd(depot_manifest_json_py["depot_config"]["username"], depot_manifest_json_py["depot_config"]["password"], depot_manifest_json_py["depot_config"]["htpasswd_path"])
     err = "    HOST PREP: Generating SSL certs with openssl."
     liblog.write_to_logs(err, logfile_name)
     depot.generate_ssl_cert(depot_manifest_json_py["depot_config"]["ssl_cert_path"], depot_manifest_json_py["depot_config"]["ssl_key_path"])
@@ -96,11 +94,9 @@ def depot_config():
     permissions_cmd = []
     permissions_cmd = "chmod", "-R", "755", "/usr/local/drop/"
     libgen.run_local_shell_cmd(permissions_cmd)
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-    temp_network_name = "depot-network-test01"
     err = "    STEP 1: Build docker network."
     liblog.write_to_logs(err, logfile_name)
-    err = "        "+depot.create_docker_bridge_network(temp_network_name)
+    err = "        "+depot.create_docker_bridge_network(depot_manifest_json_py["depot_config"]["docker_network_name"])
     err = "    STEP 2: Apache Web Server."
     liblog.write_to_logs(err, logfile_name)
     err = "    Removing existing containers."
@@ -108,7 +104,7 @@ def depot_config():
     depot.remove_docker_container(depot_manifest_json_py["depot_config"]["httpd_container_name"])
     err = "    Creating HTTPD container."
     liblog.write_to_logs(err, logfile_name)
-    depot.run_httpd_docker_container(depot_manifest_json_py["depot_config"]["httpd_container_image"], depot_manifest_json_py["depot_config"]["httpd_container_name"], depot_manifest_json_py["depot_config"]["local_volume_path"], depot_manifest_json_py["depot_config"]["httpd_auth_conf_path"], temp_network_name)
+    depot.run_httpd_docker_container(depot_manifest_json_py["depot_config"]["httpd_container_image"], depot_manifest_json_py["depot_config"]["httpd_container_name"], depot_manifest_json_py["depot_config"]["local_volume_path"], depot_manifest_json_py["depot_config"]["httpd_auth_conf_path"], depot_manifest_json_py["depot_config"]["docker_network_name"])
     err = "    httpd Apache Depot created."
     liblog.write_to_logs(err, logfile_name)
     err = "    STEP 3: NGINX reverse proxy."
@@ -118,7 +114,7 @@ def depot_config():
     depot.remove_docker_container(depot_manifest_json_py["depot_config"]["nginx_container_name"])
     err = "    Creating NGINX container."
     liblog.write_to_logs(err, logfile_name)
-    depot.run_nginx_docker_container(depot_manifest_json_py["depot_config"]["nginx_container_image"], depot_manifest_json_py["depot_config"]["nginx_container_name"], depot_manifest_json_py["depot_config"]["nginx_conf_path"], depot_manifest_json_py["depot_config"]["ssl_cert_path"], depot_manifest_json_py["depot_config"]["ssl_key_path"], depot_manifest_json_py["depot_config"]["htpasswd_path"], temp_network_name)
+    depot.run_nginx_docker_container(depot_manifest_json_py["depot_config"]["nginx_container_image"], depot_manifest_json_py["depot_config"]["nginx_container_name"], depot_manifest_json_py["depot_config"]["nginx_conf_path"], depot_manifest_json_py["depot_config"]["ssl_cert_path"], depot_manifest_json_py["depot_config"]["ssl_key_path"], depot_manifest_json_py["depot_config"]["htpasswd_path"], depot_manifest_json_py["depot_config"]["docker_network_name"])
 
 
 def help_menu():
