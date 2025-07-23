@@ -27,19 +27,19 @@ def create_depot_parent_folder(dir_path):
     except Exception as e:
         return "ERR: An exception has occurred."
 
-def create_depot_sub_folders(dir_path, folder_structure_json_py):
+def create_depot_sub_folders(dir_path, depot_manifest_json_py):
     #Convert the json to a python object before passing into this function
     errlist = []
-    for i in range(len(folder_structure_json_py["folder_structure"])):
+    for i in range(len(depot_manifest_json_py["folder_structure"])):
         try: 
-            os.makedirs(dir_path+"/"+folder_structure_json_py["folder_structure"][i]["path"])
-            errlist.append(folder_structure_json_py["folder_structure"][i]["path"]+" is a Success!")
+            os.makedirs(dir_path+"/"+depot_manifest_json_py["folder_structure"][i]["path"])
+            errlist.append(depot_manifest_json_py["folder_structure"][i]["path"]+" is a Success!")
         except FileExistsError:
-            errlist.append(dir_path+"/"+folder_structure_json_py["folder_structure"][i]["path"]+" Already Exists.")
+            errlist.append(dir_path+"/"+depot_manifest_json_py["folder_structure"][i]["path"]+" Already Exists.")
         except PermissionError:
-            errlist.append("ERR: Permission Denied during creation of "+dir_path+"/"+folder_structure_json_py["folder_structure"][i]["path"])
+            errlist.append("ERR: Permission Denied during creation of "+dir_path+"/"+depot_manifest_json_py["folder_structure"][i]["path"])
         except Exception as e:
-            errlist.append("ERR: An exception has occurred during creation of "+dir_path+"/"+folder_structure_json_py["folder_structure"][i]["path"])
+            errlist.append("ERR: An exception has occurred during creation of "+dir_path+"/"+depot_manifest_json_py["folder_structure"][i]["path"])
     
     errstatement = ""
     for e in range(len(errlist)):

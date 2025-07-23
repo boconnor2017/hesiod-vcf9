@@ -1,15 +1,35 @@
 {
     "folder_structure" : [
-    { "path" : "PROD/COMP/ESX_HOST" },
-    { "path" : "PROD/COMP/NSX_T_MANAGER" },
-    { "path" : "PROD/COMP/SDDC_MANAGER_VCF" },
-    { "path" : "PROD/COMP/SDDC_MANAGER_VCF/Compatibility" },
-    { "path" : "PROD/COMP/VCENTER" },
-    { "path" : "PROD/COMP/VCF_OPS_CLOUD_PROXY" },
-    { "path" : "PROD/COMP/VRA" },
-    { "path" : "PROD/COMP/VROPS" },
-    { "path" : "PROD/COMP/VRSLCM" },
-    { "path" : "PROD/metadata/manifest/v1" },
-    { "path" : "PROD/metadata/productVersionCatalog/v1" },
-    { "path" : "PROD/vsan/hcl" }
-]}
+        { "path" : "PROD/COMP/ESX_HOST" },
+        { "path" : "PROD/COMP/NSX_T_MANAGER" },
+        { "path" : "PROD/COMP/SDDC_MANAGER_VCF" },
+        { "path" : "PROD/COMP/SDDC_MANAGER_VCF/Compatibility" },
+        { "path" : "PROD/COMP/VCENTER" },
+        { "path" : "PROD/COMP/VCF_OPS_CLOUD_PROXY" },
+        { "path" : "PROD/COMP/VRA" },
+        { "path" : "PROD/COMP/VROPS" },
+        { "path" : "PROD/COMP/VRSLCM" },
+        { "path" : "PROD/metadata/manifest/v1" },
+        { "path" : "PROD/metadata/productVersionCatalog/v1" },
+        { "path" : "PROD/vsan/hcl" }
+    ],
+
+    "depot_config" : {
+        "local_volume_path" : "/usr/local/drop",
+        "username" : "vcf",
+        "password" : "VMware123!",
+        "htpasswd_path" : "/usr/local/drop/htpasswd/.htpasswd",
+        "ssl_folder_path" : "/usr/local/drop/certs",
+        "ssl_cert_path" : "/usr/local/drop/certs/cert.pem",
+        "ssl_key_path" : "/usr/local/drop/certs/key.pem",
+        "httpd_folder_path" : "/usr/local/drop/httpd_conf",
+        "httpd_auth_conf_path" : "/usr/local/drop/httpd_conf/http-auth.conf",
+        "httpd_container_name" : "hesiod-depot",
+        "httpd_container_image" : "httpd:latest",
+        "nginx_folder_path" : "/usr/local/drop/nginx_conf",
+        "nginx_conf_path" : "/usr/local/drop/nginx_conf/nginx.conf",
+        "nginx_container_name" : "hesiod-reverse-proxy",
+        "nginx_container_image" : "nginx:latest"
+    }
+
+}
