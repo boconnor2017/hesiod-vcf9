@@ -46,6 +46,17 @@ def create_depot_sub_folders(dir_path, depot_manifest_json_py):
         errstatement = errstatement+"; "+errlist[e]
     return errstatement
 
+def create_docker_bridge_network(network_name):
+    client = docker.from_env()
+    try:
+        docker_net = client.networks.get(network_name)
+        err = network_name+" already exists."
+        return err
+    except docker.errors.NotFound:
+        docker_net = client.networks.create(network_name, driver="bridge")
+        err = network_name+" created."
+        return err
+
 def get_docker_container(container_name):
     client = docker.from_env()
     container = client.containers.get(container_name)
@@ -69,7 +80,7 @@ def remove_docker_container(container_name):
     except docker.errors.NotFound:
         pass
 
-def run_httpd_docker_container(image_name, container_name, local_folder, httpd_conf_path):
+def run_httpd_docker_container(image_name, container_name, local_folder, httpd_conf_path, httpd_network):
     client = docker.from_env()
     container = client.containers.run(
         image_name,
@@ -79,11 +90,12 @@ def run_httpd_docker_container(image_name, container_name, local_folder, httpd_c
             local_folder: {'bind': "/usr/local/apache2/htdocs", 'mode': 'rw'},
             httpd_conf_path: {'bind': '/usr/local/apache2/conf/httpd-auth.conf', 'mode': 'ro'}
         },
-        detach=True
+        detach=True,
+        network=httpd_network
     )
     return container
 
-def run_nginx_docker_container(image_name, container_name, nginx_conf_path, cert_path, key_path, htpasswd_path):
+def run_nginx_docker_container(image_name, container_name, nginx_conf_path, cert_path, key_path, htpasswd_path, nginx_network):
     client = docker.from_env()
     container = client.containers.run(
         image=image_name,
@@ -94,9 +106,9 @@ def run_nginx_docker_container(image_name, container_name, nginx_conf_path, cert
             cert_path: {'bind': '/etc/nginx/cert.pem', 'mode': 'ro'},
             key_path: {'bind': '/etc/nginx/key.pem', 'mode': 'ro'},
             htpasswd_path: {'bind': '/etc/nginx/.htpasswd', 'mode': 'ro'},
-        },
-        network_mode='bridge',  
-        detach=True
+        },  
+        detach=True,
+        network=nginx_network
     )
     return container
 
