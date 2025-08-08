@@ -6,6 +6,7 @@ from hesiod import lib_paramiko as libpko
 
 # Import VCF libraries
 from lib import vcf9_depot as depot
+from lib import esxi_on_esxi as eoe
 
 # Import Standard Python libraries
 import os
@@ -54,6 +55,11 @@ def _main_(args):
         err = "    -depot found. Initiating depot config."
         liblog.write_to_logs(err, logfile_name)
         depot_config()
+        sys.exit()
+    if '-eoe' in args:
+        err = "   -eoe found. Initiating ESXi on ESXi."
+        liblog.write_to_logs(err, logfile_name)
+        esxi_on_esxi()
         sys.exit()
     else :
         err = "    No options found. Initiating HELP menu."
@@ -116,6 +122,9 @@ def depot_config():
     liblog.write_to_logs(err, logfile_name)
     depot.run_nginx_docker_container(depot_manifest_json_py["depot_config"]["nginx_container_image"], depot_manifest_json_py["depot_config"]["nginx_container_name"], depot_manifest_json_py["depot_config"]["nginx_conf_path"], depot_manifest_json_py["depot_config"]["ssl_cert_path"], depot_manifest_json_py["depot_config"]["ssl_key_path"], depot_manifest_json_py["depot_config"]["htpasswd_path"], depot_manifest_json_py["depot_config"]["docker_network_name"])
 
+def esxi_on_esxi():
+    err = eoe.pcli_create_vm_from_iso()
+    print(err)
 
 def help_menu():
     print("HELP MENU: hesiod-vcf9.py [options]")
