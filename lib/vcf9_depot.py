@@ -108,7 +108,7 @@ def run_nginx_docker_container(image_name, container_name, nginx_conf_path, cert
     container = client.containers.run(
         image=image_name,
         name=container_name,
-        ports={'443/tcp': '8443'}, # Map port 443 in container to 8443 on host
+        ports={'443/tcp': '443'}, # Map port 443 in container to 8443 on host
         volumes={
             nginx_conf_path: {'bind': '/etc/nginx/nginx.conf', 'mode': 'ro'},
             cert_path: {'bind': '/etc/nginx/cert.pem', 'mode': 'ro'},

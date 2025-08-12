@@ -1,5 +1,10 @@
 {
     "folder_structure" : [
+        { "path" : "PROD/COMP" },
+        { "path" : "PROD/metadata" },
+        { "path" : "PROD/vsan" },
+        { "path" : "PROD/metadata/manifest/v1" },
+        { "path" : "PROD/metadata/productVersionCatalog/v1" },
         { "path" : "PROD/COMP/ESX_HOST" },
         { "path" : "PROD/COMP/NSX_T_MANAGER" },
         { "path" : "PROD/COMP/SDDC_MANAGER_VCF" },
@@ -9,7 +14,6 @@
         { "path" : "PROD/COMP/VRA" },
         { "path" : "PROD/COMP/VROPS" },
         { "path" : "PROD/COMP/VRSLCM" },
-        { "path" : "PROD/metadata/manifest/v1" },
         { "path" : "PROD/metadata/productVersionCatalog/v1" },
         { "path" : "PROD/vsan/hcl" }
     ],
