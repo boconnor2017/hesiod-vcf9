@@ -13,6 +13,8 @@ import docker
 import subprocess
 import crypt
 import getpass
+import zipfile
+import socket
 
 def copy_files(src_path, target_path):
     shutil.copy2(src_path, target_path)
@@ -128,3 +130,7 @@ def set_folder_permissions(dir_path, permission):
         #for filename in files:
         #    filepath = os.path.join(root, filename)
         #    os.chmod(filepath, permission)
+
+def unzip_file(zipfilename, destinationfodername):
+    with zipfile.ZipFile(zipfilename, 'r') as zippy:
+        zippy.extractall(destinationfodername)

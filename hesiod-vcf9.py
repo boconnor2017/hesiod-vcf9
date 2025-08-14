@@ -89,12 +89,17 @@ def depot_config():
     depot.copy_files("conf/offline_depot_img01.png", depot_manifest_json_py["depot_config"]["local_volume_path"])
     depot.copy_files("conf/offline_depot_img02.png", depot_manifest_json_py["depot_config"]["local_volume_path"])
     depot.copy_files("conf/index.html", depot_manifest_json_py["depot_config"]["local_volume_path"])
-    err = "    HOST PREP: Creating VCF9 Folder structure."
+    # # # # # EDIT HERE - USE METADATA ZIP FILE # # # # # # # #
+    #err = "    HOST PREP: Creating VCF9 Folder structure."
+    #liblog.write_to_logs(err, logfile_name)
+    #err = "    "+depot.create_depot_parent_folder(depot_manifest_json_py["depot_config"]["local_volume_path"]+"/VCF9")
+    #liblog.write_to_logs(err, logfile_name)
+    #err = "    "+depot.create_depot_sub_folders(depot_manifest_json_py["depot_config"]["local_volume_path"]+"/VCF9", depot_manifest_json_py)
+    #liblog.write_to_logs(err, logfile_name)
+    # # # # # END EDIT  # # # # # # # #
+    err = "    HOST PREP: Creating VCF9 Folder structure from "+depot_manifest_json_py["depot_config"]["vcf-metadata-filename"]
     liblog.write_to_logs(err, logfile_name)
-    err = "    "+depot.create_depot_parent_folder(depot_manifest_json_py["depot_config"]["local_volume_path"]+"/VCF9")
-    liblog.write_to_logs(err, logfile_name)
-    err = "    "+depot.create_depot_sub_folders(depot_manifest_json_py["depot_config"]["local_volume_path"]+"/VCF9", depot_manifest_json_py)
-    liblog.write_to_logs(err, logfile_name)
+    depot.unzip_file(depot_manifest_json_py["depot_config"]["local_volume_path"]+"/"+depot_manifest_json_py["depot_config"]["vcf-metadata-filename"], depot_manifest_json_py["depot_config"]["local_volume_path"])
     err = "    HOST PREP: Editing permissions of folder structure."
     liblog.write_to_logs(err, logfile_name)
     permissions_cmd = []

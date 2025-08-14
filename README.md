@@ -29,6 +29,9 @@ The following binaries are **required** to run hesiod-vcf9:
 | VCF 9 Operations (ova) | version 9.0.0 is required (download from [Broadcom Portal](https://support.broadcom.com/web/ecx)) |
 | VCF 9 Operations Lifecycle Manager (ova) | version 9.0.0 is required (download from [Broadcom Portal](https://support.broadcom.com/web/ecx)) |
 | VCF 9 Automation (tar) | version 9.0.0 is required (download from [Broadcom Portal](https://support.broadcom.com/web/ecx)) |
+| VCF 9 Download Tool (tar) | version 9.0.0 is required (download from [Broadcom Portal](https://support.broadcom.com/web/ecx)) |
+| VCF 9 Offline Depot Metadata (zip) | version 9.0.0 is required (download from [Broadcom Portal](https://support.broadcom.com/web/ecx)) |
+
 
 The following shared services are **required** to run hesiod-vcf9:
 
@@ -119,32 +122,18 @@ cp -r hesiod/python/ hesiod-vcf9/hesiod
 ```
 cd hesiod-vcf9/
 ```
-* Step 5: Create the Offline Depot Web Service and File structure
+* Step 5: Download/SFTP the `vcf-9.x.x.x-offline-depot-metadata.zip` file to `/usr/local/drop`
+```
+root@photon-machine [ /usr/local/drop ]# ls -l
+total 1164
+-rw-r----- 1 root root 1191522 Aug 14 14:11 vcf-9.0.0.0-offline-depot-metadata.zip
+```
+* Step 6: Create the Offline Depot Web Service
 ```
 python3 hesiod-vcf9.py -depot
 ```   
 
-Using a browser, you can now view your Depot at `https://<IP ADDRESS>:8443`
+Using a browser, you can now view your Depot at `https://<IP ADDRESS>`
 
 
-* Step 6: Upload (sftp) binaries to their associated folder under `/usr/local/drop`
-```
-VCF9
-└── PROD
-    ├── COMP
-        ├── ESX_HOST
-        ├── NSX_T_MANAGER
-        │   ├── VMware-NSX-T-9.0.0.0.24733065.vlcp
-        │   └── nsx-unified-appliance-9.0.0.0.24733065.ova
-        ├── SDDC_MANAGER_VCF
-        │   └── VCF-SDDC-Manager-Appliance-9.0.0.0.24703748.ova
-        ├── VCENTER
-        │   └── VMware-VCSA-all-9.0.0.0.24755230.iso
-        ├── VRA
-        │   └── vmsp-vcfa-combined-9.0.0.0.24701403.tar
-        ├── VROPS
-        │   └── Operations-Appliance-9.0.0.0.24695812.ova
-        └── VRSLCM
-            └── VCF-OPS-Lifecycle-Manager-Appliance-9.0.0.0.24695816.ova
-
-```
+* Step 6: 
