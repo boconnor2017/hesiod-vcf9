@@ -88,7 +88,7 @@ python3 hesiod-vcf9.py -json2md myconfigfile.json mydocfile.md
 
 ## PATH 3: Deploy an Offline Depot to Store Binaries
 
-* Step 1: Deploy a new PhotonOS VM with **100GB** vDisk. ssh to the new VM and execute the remaining steps.
+* Step 1: Deploy a new PhotonOS VM with **140GB** vDisk. ssh to the new VM and execute the remaining steps.
 * Step 2: Repartition the disk:
     * Run fdisk: `fdisk /dev/sda`
     * List Partitions: `p`
@@ -97,7 +97,7 @@ python3 hesiod-vcf9.py -json2md myconfigfile.json mydocfile.md
     * New Partition: `n`
     * Number 2: `2`
     * Start value next to sda2: `30720`
-    * End value (use the default): `104857566`
+    * End value (use the default): `293599231`
     * Do not remove signature: `N`
     * List Partitions (you should see new size next to Linux Filesystem): `p`
     * Verify Partition data: `v`
@@ -122,18 +122,15 @@ cp -r hesiod/python/ hesiod-vcf9/hesiod
 ```
 cd hesiod-vcf9/
 ```
-* Step 5: Download/SFTP the `vcf-9.x.x.x-offline-depot-metadata.zip` file to `/usr/local/drop`
+* Step 5: Download/SFTP the `vcf-9.x.x.x-offline-depot-metadata.zip` file and the `vcf-download-tool-9.x.x.x.x.tar.gz` file to `/usr/local/drop`
 ```
 root@photon-machine [ /usr/local/drop ]# ls -l
 total 1164
 -rw-r----- 1 root root 1191522 Aug 14 14:11 vcf-9.0.0.0-offline-depot-metadata.zip
 ```
-* Step 6: Create the Offline Depot Web Service
+* Step 6: Run the following command from Photon:
 ```
 python3 hesiod-vcf9.py -depot
 ```   
 
-Using a browser, you can now view your Depot at `https://<IP ADDRESS>`
-
-
-* Step 6: 
+Access your web server at https://<ip_address>
