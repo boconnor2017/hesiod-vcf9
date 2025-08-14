@@ -86,8 +86,8 @@ def depot_config():
     liblog.write_to_logs(err, logfile_name)
     depot.copy_files("conf/httpd-auth.conf", depot_manifest_json_py["depot_config"]["httpd_auth_conf_path"])
     depot.copy_files("conf/nginx.conf", depot_manifest_json_py["depot_config"]["nginx_conf_path"])
-    depot.copy_files("conf/offline_depot_img01.png", depot_manifest_json_py["depot_config"]["local_volume_path"])
-    depot.copy_files("conf/offline_depot_img02.png", depot_manifest_json_py["depot_config"]["local_volume_path"])
+    #depot.copy_files("conf/offline_depot_img01.png", depot_manifest_json_py["depot_config"]["local_volume_path"])
+    #depot.copy_files("conf/offline_depot_img02.png", depot_manifest_json_py["depot_config"]["local_volume_path"])
     depot.copy_files("conf/index.html", depot_manifest_json_py["depot_config"]["local_volume_path"])
     # # # # # EDIT HERE - USE METADATA ZIP FILE # # # # # # # #
     #err = "    HOST PREP: Creating VCF9 Folder structure."
