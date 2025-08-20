@@ -88,8 +88,9 @@ python3 hesiod-vcf9.py -json2md myconfigfile.json mydocfile.md
 
 ## PATH 3: Deploy an Offline Depot to Store Binaries
 
-* Step 1: Deploy a new PhotonOS VM with **140GB** vDisk. ssh to the new VM and execute the remaining steps.
-* Step 2: Repartition the disk:
+* Step 1: Deploy a new PhotonOS VM with **140GB** vDisk. 
+* Step 2: Follow [Hesiod Photon OS Quick Start](https://github.com/boconnor2017/hesiod/blob/main/photon/readme.md) steps to prep the Photon server for VCF.
+* Step 3: Repartition the disk:
     * Run fdisk: `fdisk /dev/sda`
     * List Partitions: `p`
     * Delete Partition: `d`
@@ -108,7 +109,6 @@ python3 hesiod-vcf9.py -json2md myconfigfile.json mydocfile.md
     * Check the filesystem size (GBs): `df -BG`
     * Resize the filesystem: `resize2fs /dev/sda2`
     * Recheck the filesystem size (GBs): `df -BG`
-* Step 3: Follow [Hesiod Photon OS Quick Start](https://github.com/boconnor2017/hesiod/blob/main/photon/readme.md) steps to prep the Photon server for VCF
 * Step 4: Clone this repo
 ```
 cd /usr/local/
