@@ -120,9 +120,9 @@ git clone https://github.com/boconnor2017/hesiod-vcf9
 cp -r hesiod/python/ hesiod-vcf9/hesiod
 ```
 ```
-cd hesiod-vcf9/
+cd /usr/local/drop
 ```
-* Step 5: Download/SFTP the `vcf-9.x.x.x-offline-depot-metadata.zip` file and the `vcf-download-tool-9.x.x.x.x.tar.gz` file to `/usr/local/drop`
+* Step 5: Download the `vcf-9.x.x.x-offline-depot-metadata.zip` file and the `vcf-download-tool-9.x.x.x.x.tar.gz` files from the Boradcom Portal.
 ```
 root@photon-machine [ /usr/local/drop ]# ls -l
 total 1164
