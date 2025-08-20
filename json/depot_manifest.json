@@ -8,6 +8,7 @@
         "ssl_folder_path" : "/usr/local/drop/certs",
         "ssl_cert_path" : "/usr/local/drop/certs/cert.pem",
         "ssl_key_path" : "/usr/local/drop/certs/key.pem",
+        "ssl_common_name" : "hesvcf-depot01.hesiod.local",
         "httpd_folder_path" : "/usr/local/drop/httpd_conf",
         "httpd_auth_conf_path" : "/usr/local/drop/httpd_conf/http-auth.conf",
         "httpd_container_name" : "hesiod-depot",

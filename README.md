@@ -173,6 +173,6 @@ tar -xvf vcf-download-tool-9.0.0.0100.24880038.tar.gz
 cd /usr/local/drop
 ```
 ```
-vcf-download-tool/bin/./vcf-download-tool binaries download --depot-store=/usr/local/drop --depot-download-token-file=downloadtoken.txt --vcf-version=9.0.0
+vcf-download-tool/bin/./vcf-download-tool binaries download --depot-store=/usr/local/drop/PROD --depot-download-token-file=downloadtoken.txt --vcf-version=9.0.0
 ```
 

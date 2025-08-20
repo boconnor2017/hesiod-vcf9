@@ -72,14 +72,14 @@ def generate_htpasswd(ht_username, ht_password, ht_path):
     with open(ht_path, "w") as htfile:
         htfile.write(f"{ht_username}:{hashvar}\n")
 
-def generate_ssl_cert(cert_path, key_path):
+def generate_ssl_cert(cert_path, key_path, common_name):
     #Runs openssl on the Photon OS
     subprocess.run([
         'openssl', 'req', '-x509', '-nodes', '-days', '365',
         '-newkey', 'rsa:2048',
         '-keyout', key_path,
         '-out', cert_path,
-        '-subj', '/CN=localhost'
+        '-subj', '/CN='+common_name
     ], check=True)
 
 def remove_docker_container(container_name):

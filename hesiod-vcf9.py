@@ -81,7 +81,7 @@ def depot_config():
     depot.generate_htpasswd(depot_manifest_json_py["depot_config"]["username"], depot_manifest_json_py["depot_config"]["password"], depot_manifest_json_py["depot_config"]["htpasswd_path"])
     err = "    HOST PREP: Generating SSL certs with openssl."
     liblog.write_to_logs(err, logfile_name)
-    depot.generate_ssl_cert(depot_manifest_json_py["depot_config"]["ssl_cert_path"], depot_manifest_json_py["depot_config"]["ssl_key_path"])
+    depot.generate_ssl_cert(depot_manifest_json_py["depot_config"]["ssl_cert_path"], depot_manifest_json_py["depot_config"]["ssl_key_path"], depot_manifest_json_py["depot_config"]["ssl_common_name"])
     err = "    HOST PREP: Copying conf files to respective "+depot_manifest_json_py["depot_config"]["local_volume_path"]+"/conf folders"
     liblog.write_to_logs(err, logfile_name)
     depot.copy_files("conf/httpd-auth.conf", depot_manifest_json_py["depot_config"]["httpd_auth_conf_path"])
