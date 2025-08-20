@@ -120,7 +120,7 @@ git clone https://github.com/boconnor2017/hesiod-vcf9
 cp -r hesiod/python/ hesiod-vcf9/hesiod
 ```
 ```
-cd /usr/local/drop
+cd /usr/local/hesiod-vcf9/
 ```
 ```
 python3 hesiod-vcf9.py -depot
@@ -129,6 +129,9 @@ python3 hesiod-vcf9.py -depot
 Access your web server at https://<ip_address>   
 
 ### Setting Up your Offline Depot
+```
+cd /usr/local/drop/
+```
 * Step 5: Download the `vcf-9.x.x.x-offline-depot-metadata.zip` file and the `vcf-download-tool-9.x.x.x.x.tar.gz` files from the Boradcom Portal.
 ```
 root@photon-machine [ /usr/local/drop ]# ls -l
