@@ -4,7 +4,7 @@
 $vmhosts="<ip1>", "<ip2>", "<ip3>", "<ipN>"
 $ntp="pool.ntp.org"
 $esxi_user="root"
-$esxi_pwd="VMware123!"
+$esxi_pwd="<password>"
 $vSwitch="vSwitch0" 
 $pg="VM Network"
 $vlanId="0" 
