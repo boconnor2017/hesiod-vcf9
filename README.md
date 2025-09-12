@@ -176,3 +176,10 @@ cd /usr/local/drop
 vcf-download-tool/bin/./vcf-download-tool binaries download --depot-store=/usr/local/drop/PROD --depot-download-token-file=downloadtoken.txt --vcf-version=9.0.0
 ```
 
+## PATH 4: Deploy a VCF 9 Ready Nested Management Cluster
+
+* Step 1: Edit the `lab_environment.json` file (recommended: store this file in `usr/local/drop` for future use)
+* Step 2: Run the following command from Hesiod:
+```
+python3 hesiod-vcf9.py -eoe-mgt
+```
