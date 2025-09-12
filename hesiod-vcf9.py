@@ -56,10 +56,19 @@ def _main_(args):
         liblog.write_to_logs(err, logfile_name)
         depot_config()
         sys.exit()
-    if '-eoe' in args:
-        err = "   -eoe found. Initiating ESXi on ESXi."
+    if '-eoe-mgt' in args:
+        mgt = True
+        vi = False
+        err = "   -eoe found. Initiating ESXi on ESXi (Management Cluster)."
         liblog.write_to_logs(err, logfile_name)
-        esxi_on_esxi()
+        esxi_on_esxi(mgt, vi)
+        sys.exit()
+    if '-eoe-vi' in args:
+        mgt = False
+        vi = True
+        err = "   -eoe-mgt found. Initiating ESXi on ESXi (VI cluster)."
+        liblog.write_to_logs(err, logfile_name)
+        esxi_on_esxi(mgt, vi)
         sys.exit()
     else :
         err = "    No options found. Initiating HELP menu."
@@ -127,9 +136,13 @@ def depot_config():
     liblog.write_to_logs(err, logfile_name)
     depot.run_nginx_docker_container(depot_manifest_json_py["depot_config"]["nginx_container_image"], depot_manifest_json_py["depot_config"]["nginx_container_name"], depot_manifest_json_py["depot_config"]["nginx_conf_path"], depot_manifest_json_py["depot_config"]["ssl_cert_path"], depot_manifest_json_py["depot_config"]["ssl_key_path"], depot_manifest_json_py["depot_config"]["htpasswd_path"], depot_manifest_json_py["depot_config"]["docker_network_name"])
 
-def esxi_on_esxi():
-    err = eoe.pcli_create_vm_from_iso()
-    print(err)
+def esxi_on_esxi(mgt, vi):
+    if mgt:
+        err = eoe.pcli_create_vms_from_iso(env_json_py["nested_esxi_servers"]["management_host_specs"])
+        print(err)
+    if vi:
+        err = eoe.pcli_create_vms_from_iso(env_json_py["nested_esxi_servers"]["vi_host_specs"])
+        print(err)
 
 def help_menu():
     print("HELP MENU: hesiod-vcf9.py [options]")

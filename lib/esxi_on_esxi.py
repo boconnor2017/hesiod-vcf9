@@ -16,22 +16,42 @@ import getpass
 
 '''
 Workflow:
-    1. Create ISO
-        1.1. KS.CFG needs to be created
-        1.2. Specs for KS.CFG should come from json file vm.json
-        1.3. Pause: prompt to continue when ESXi ISO has been mounted to vm
-        1.4. Create custom ISO
-            1.4.1. Extract ISO to temp dir
-            1.4.2. Chmod 755 to the temp dir
-            1.4.3. Edit BOOT.CFG and insert kickstart
-    2. Upload ISO
-        2.1. Prompt user: create new ISO?
-        2.2. If Yes: upload custom ISO to datastore1
-    3. Build N shell vms with the approprate sizing specs
-        1.1. VM specs should come from a json file vm.json
-        1.2. CD/DVD Drive: mount custom ISO
-        1.3. Boot
-    4. Run VCF Prep Script against N vms
+    0. Specs (JSON)
+        MGT[]
+            hostname
+            ip address
+            24 CPU
+                Expose Hardware Assisted Virtualization to the Guest
+            384 GB Memory
+            1080 GB Storage
+                HD1: 16GB
+                HD2: 40GB
+                HD3: 1024GB
+            CD attach to ISO
+        VI[]
+            hostname
+            ip address
+            20 CPU
+                Expose Hardware Assisted Virtualization to the Guest
+            384 GB Memory
+            306 GB Storage
+                HD1: 16GB
+                HD2: 40GB
+                HD3: 250GB
+            CD attach to ISO
+
+    1. pcli_create_vms_from_iso(spec)
+        1.1 Connect to ESXi Host
+        1.2 Build vms from spec
+            1.2.1 Enable CPU passthrough
+            1.2.2 Establish Boot Options
+            1.2.3 Establish Flags
+            1.2.4 Create CD Drive and attach ESXi ISO
+            1.2.5 Add Disks
+        1.3 Start VMs
+
+    2. pcli_prep_hosts_for_vcf(hosts)
+        2.1 For each host, configure for VCF
 
 '''
 
@@ -42,7 +62,11 @@ def delete_script_file(script_file_name):
 def hello_world():
     print("Works.")
 
-def pcli_create_vm_from_iso():
+def pcli_create_vms_from_iso(host_specs):
+    i=0
+    while i < host_specs.len():
+        print("Test: "+host_specs["name_of_vm"])
+        i=i+1
     script_file_name = "pcli_create_vm_from_iso.ps1"
     script_raw = populate_var_from_file("lib/scripts/pcli_create_vm_from_iso.script")
     script = script_raw.splitlines()
