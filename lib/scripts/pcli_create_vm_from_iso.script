@@ -8,7 +8,7 @@ $esxi_server_datastore = "datastore2"
 $path_to_iso_on_datastore = "[datastore1] ISO/VMware-ESXi-9.0.0.iso"
 
 # VM Input Variables
-$vm_name = "test-07a"
+$vm_name = "test-07b"
 $vm_cpu = 24
 $vm_memoryMB = (384*1024)
 $vm_disk1GB = 16
@@ -51,10 +51,10 @@ $vm_config_spec.Firmware = [VMware.Vim.GuestOsDescriptorFirmwareType]::efi
 $vm_config_spec.NestedHVEnabled = $true
 
 # VM Config Specs: Set Guest Properties
-$guest_specs = New-Object VMware.Vim.GuestInfo
-$guest_specs.GuestId = "vmkernel9Guest"
-$guest_specs.GuestFamily = "otherGuestFamily"
-$guest_specs.GuestFullName = "VMware ESXi 9.0 or later"
+#$guest_specs = New-Object VMware.Vim.GuestInfo
+#$guest_specs.GuestId = "vmkernel9Guest"
+#$guest_specs.GuestFamily = "otherGuestFamily"
+#$guest_specs.GuestFullName = "VMware ESXi 9.0 or later"
 
 # VM Config Specs: Establish Flags
 $vm_flags = New-Object VMware.Vim.VirtualMachineFlagInfo
