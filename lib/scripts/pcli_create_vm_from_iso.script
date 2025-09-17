@@ -1,61 +1,78 @@
 #!/bin/sh
 
 # Server Input Variables
-$esxi_server_ip_address = "172.16.0.201"
+$esxi_server_ip_address = "172.16.0.202"
 $esxi_server_username = "root"
 $esxi_server_password = "VMware1!"
-$esxi_server_datastore = "datastore1"
+$esxi_server_datastore = "datastore2"
 $path_to_iso_on_datastore = "[datastore1] ISO/VMware-ESXi-9.0.0.iso"
 
 # VM Input Variables
-$vm_name = "test-03"
-$vm_cpu = 2
-$vm_memoryMB = (4*1024)
-$vm_disk1MB = (10*1024)
-$vm_disk2MB = (10*1024)
-$vm_disk3MB = (10*1024)
+$vm_name = "test-07a"
+$vm_cpu = 24
+$vm_memoryMB = (384*1024)
+$vm_disk1GB = 16
+$vm_disk2GB = 40
+$vm_disk3GB = 1024
 $vm_network = "VM Network"
 
 
 ### * * * * * * Try not to change anything below this point * * * * * * * *
 
-#Ignore https cert errors
+# Import Modules
+Import-Module VMware.PowerCLI
+Import-Module VMware.VimAutomation.Common
+Import-Module VMware.VimAutomation.Core
+
+# Ignore https cert errors
 Set-PowerCLIConfiguration -InvalidCertificateAction ignore -Confirm:$false
 
-#Connect to the ESXi host and open a session.
+# Connect to the ESXi host and open a session.
 $esxi_server_ip_address | Foreach-Object {Connect-VIserver $_ -User $esxi_server_username -Password $esxi_server_password}
 
 # Build Virtual Machine
-New-VM -Name $vm_name -NumCPU $vm_cpu -MemoryMB $vm_memoryMB -DiskMB $vm_disk1MB -NetworkName $vm_network -Datastore $esxi_server_datastore -DiskStorageFormat "Thin" -GuestID "otherLinux64Guest"
+New-VM -Name $vm_name -NumCPU $vm_cpu -MemoryMB $vm_memoryMB -NetworkName $vm_network -Datastore $esxi_server_datastore -DiskStorageFormat "Thick" -GuestID "vmkernel9Guest"
 $nested_esxi_vm = Get-VM -Name $vm_name
-
-# VM Config Specs: Enable CPU Hardware Virtualization Passthrough
-$vm_config_spec = New-Object VMware.Vim.VirtualMachineConfigSpec
-$vm_config_spec.Firmware = [VMware.Vim.GuestOsDescriptorFirmwareType]::efi
-$vm_config_spec.NestedHVEnabled = $true
-
-# VM Config Specs: Establish Boot Options
-$vm_boot_options = New-Object VMware.Vim.VirtualMachineBootOptions
-$vm_boot_options.EfiSecureBootEnabled = $true
-$vm_config_spec.BootOptions = $vm_boot_options
-
-# VM Config Specs: Establish Flags
-$vm_flags = New-Object VMware.Vim.VirtualMachineFlagInfo
-$vm_flags.VbsEnabled = $true
-$vm_flags.VvtdEnabled = $true
-$vm_config_spec.flags = $flags
-
-# Reconfigure VM to specs
-$nested_esxi_vm.ExtensionData.ReconfigVM($vm_config_spec)
 
 # Create CD Drive and attach ESXi ISO
 New-CDDrive -VM $nested_esxi_vm.Name
 $cd_drive_specs = Get-CDDrive -VM $nested_esxi_vm
 Set-CDDrive -CD $cd_drive_specs -IsoPath $path_to_iso_on_datastore -StartConnected:$true -Confirm:$false
 
-# Add Disk for boot process
-New-HardDisk -VM $nested_esxi_vm -CapacityGB $vm_disk2MB -Persistence persistent
-New-HardDisk -VM $nested_esxi_vm -CapacityGB $vm_disk3MB -Persistence persistent
+# Create ESXi Hard Drives
+New-HardDisk -VM $nested_esxi_vm -CapacityGB $vm_disk1GB -Persistence persistent
+New-HardDisk -VM $nested_esxi_vm -CapacityGB $vm_disk2GB -Persistence persistent
+New-HardDisk -VM $nested_esxi_vm -CapacityGB $vm_disk3GB -Persistence persistent
+$disks = Get-HardDisk -VM $nested_esxi_vm
+
+# VM Config Specs: Enable CPU Hardware Virtualization Passthrough
+$vm_config_spec = New-Object VMware.Vim.VirtualMachineConfigSpec
+$vm_config_spec.Firmware = [VMware.Vim.GuestOsDescriptorFirmwareType]::efi
+$vm_config_spec.NestedHVEnabled = $true
+
+# VM Config Specs: Set Guest Properties
+$guest_specs = New-Object VMware.Vim.GuestInfo
+$guest_specs.GuestId = "vmkernel9Guest"
+$guest_specs.GuestFamily = "otherGuestFamily"
+$guest_specs.GuestFullName = "VMware ESXi 9.0 or later"
+
+# VM Config Specs: Establish Flags
+$vm_flags = New-Object VMware.Vim.VirtualMachineFlagInfo
+$vm_flags.VbsEnabled = $true
+$vm_flags.VvtdEnabled = $true
+$vm_config_spec.flags = $vm_flags
+
+# VM Config Specs: Establish Boot Options
+$vm_boot_options = New-Object VMware.Vim.VirtualMachineBootOptions
+$vm_boot_options.EfiSecureBootEnabled = $true
+$vm_config_spec.BootOptions = $vm_boot_options
+$cd = New-Object -TypeName VMware.Vim.VirtualMachineBootOptionsBootableCdromDevice
+$bootDisk = New-Object -TypeName VMware.Vim.VirtualMachineBootOptionsBootableDiskDevice
+$bootDisk.DeviceKey = ($disks[1]).ExtensionData.Key
+$vm_config_spec.BootOptions.BootOrder = $cd,$bootDisk
+
+# Reconfigure VM to specs
+$nested_esxi_vm.ExtensionData.ReconfigVM($vm_config_spec)
 
 # Start VM
 Start-vm -vm $nested_esxi_vm.Name

@@ -64,8 +64,8 @@ def hello_world():
 
 def pcli_create_vms_from_iso(host_specs):
     i=0
-    while i < host_specs.len():
-        print("Test: "+host_specs["name_of_vm"])
+    while i < len(host_specs):
+        print("Test"+ str(i)+": "+host_specs[i]["name_of_vm"])
         i=i+1
     script_file_name = "pcli_create_vm_from_iso.ps1"
     script_raw = populate_var_from_file("lib/scripts/pcli_create_vm_from_iso.script")
