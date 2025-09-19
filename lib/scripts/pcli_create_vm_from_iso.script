@@ -1,27 +1,27 @@
 #!/bin/sh
 
 # Server Input Variables
-$esxi_server_ip_address = "172.16.0.202"
-$esxi_server_username = "root"
-$esxi_server_password = "VMware1!"
-$esxi_server_datastore = "datastore2"
-$path_to_iso_on_datastore = "[datastore1] ISO/VMware-ESXi-9.0.0.iso"
+$esxi_server_ip_address = "ID:SIV-001"
+$esxi_server_username = "ID:SIV-002"
+$esxi_server_password = "ID:SIV-003"
+$esxi_server_datastore = "ID:SIV-004"
+$path_to_iso_on_datastore = "ID:SIV-005"
 
 # VM Input Variables
-$vm_name = "test-09"
-$vm_cpu = 24
-$vm_memoryMB = (384*1024)
-$vm_disk1GB = 16
-$vm_disk2GB = 40
-$vm_disk3GB = 1024
-$vm_network = "VM Network"
+$vm_name = "ID:VIV-001"
+$vm_cpu = ID:VIV-002
+$vm_memoryMB = (ID:VIV-003*1024)
+$vm_disk1GB = ID:VIV-004
+$vm_disk2GB = ID:VIV-005
+$vm_disk3GB = ID:VIV-006
+$vm_network = "ID:VIV-007"
 
-# Nested ESXi Variables
-$nested_esxi_ip = "172.16.10.23"
-$nested_esxi_subnet = "255.255.255.0"
-$nested_esxi_gateway = "172.16.10.1"
-$nested_esxi_dns = "172.16.10.9", "8.8.8.8"
-$nested_esxi_hostname = "hesvcf-esx08.hesiod.local"
+# Nested ESXi Input Variables
+$nested_esxi_ip = "ID:EIV-001"
+$nested_esxi_subnet = "ID:EIV-002"
+$nested_esxi_gateway = "ID:EIV-003"
+$nested_esxi_dns = "ID:EIV-004", "ID:EIV-005"
+$nested_esxi_hostname = "ID:EIV-006"
 
 
 ### * * * * * * Try not to change anything below this point * * * * * * * *

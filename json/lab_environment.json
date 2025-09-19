@@ -40,13 +40,13 @@
         "ip_address" : "<enter value here>",
         "server_type" : "VCF Lab Nested Resources", 
         "deploy_vms_to_this_network" : "VM Network", 
-        "deploy_vms_to_this_datastore" : "datastore1"
+        "deploy_vms_to_this_datastore" : ["datastore1", "datastore2"]
     }],
     
     "universal_authentication" : {
-        "universal_password" : "<enter value here>",
-        "universal_long_password" : "<enter value here>",
-        "vcenter_administrator_sso_login" : "administrator@vsphere.local"
+        "physical_password" : "<enter password to physical hosts here>",
+        "virtual_password" : "<enter password that you want to set on nested ESXi hosts here>",
+        "mpc_password" : "<enter long password that you want to set on all VCF components>"
     },
 
     "dns" : [
@@ -63,130 +63,23 @@
     "nested_esxi_servers" : {
         "management_host_specs" : [{
             "name_of_vm" : "<enter value here>",
-            "nested_esxi_hostname" : "<enter value here>",
+            "nested_esxi_hostname" : "<enter fqdn value here>",
             "nested_esxi_ip_address" : "<enter value here>", 
-            "numCPU" : "24",
+            "numCPU" : "<enter value here>",
             "expose_hw_virt_to_guest" : "yes",
-            "memoryGB" : "384",
+            "memoryGB" : "<enter value here>",
             "harddisks" : [{
                 "storage_GB" : "16"
             },
             {
-                "storage_GB" : "40"
+                "storage_GB" : "<enter value here>"
             },
             {
-                "storage_GB" : "1024"
+                "storage_GB" : "<enter value here>"
             }],
-            "CD_path" : "[datastore1] ISO/VMware-ESXi-9.0.0.iso",
-            "deploy_to_physical_host" : 0
-        },{
-            "name_of_vm" : "<enter value here>",
-            "nested_esxi_hostname" : "<enter value here>",
-            "nested_esxi_ip_address" : "<enter value here>", 
-            "numCPU" : "24",
-            "expose_hw_virt_to_guest" : "yes",
-            "memoryGB" : "384",
-            "harddisks" : [{
-                "storage_GB" : "16"
-            },
-            {
-                "storage_GB" : "40"
-            },
-            {
-                "storage_GB" : "1024"
-            }],
-            "CD_path" : "[datastore1] ISO/VMware-ESXi-9.0.0.iso",
-            "deploy_to_physical_host" : 0
-        },{
-            "name_of_vm" : "<enter value here>",
-            "nested_esxi_hostname" : "<enter value here>",
-            "nested_esxi_ip_address" : "<enter value here>", 
-            "numCPU" : "24",
-            "expose_hw_virt_to_guest" : "yes",
-            "memoryGB" : "384",
-            "harddisks" : [{
-                "storage_GB" : "16"
-            },
-            {
-                "storage_GB" : "40"
-            },
-            {
-                "storage_GB" : "1024"
-            }],
-            "CD_path" : "[datastore1] ISO/VMware-ESXi-9.0.0.iso",
-            "deploy_to_physical_host" : 0
-        },{
-            "name_of_vm" : "<enter value here>",
-            "nested_esxi_hostname" : "<enter value here>",
-            "nested_esxi_ip_address" : "<enter value here>", 
-            "numCPU" : "24",
-            "expose_hw_virt_to_guest" : "yes",
-            "memoryGB" : "384",
-            "harddisks" : [{
-                "storage_GB" : "16"
-            },
-            {
-                "storage_GB" : "40"
-            },
-            {
-                "storage_GB" : "1024"
-            }],
-            "CD_path" : "[datastore1] ISO/VMware-ESXi-9.0.0.iso",
-            "deploy_to_physical_host" : 0
-        }],
-        "vi_host_specs" : [{
-            "name_of_vm" : "<enter value here>",
-            "nested_esxi_hostname" : "<enter value here>",
-            "nested_esxi_ip_address" : "<enter value here>", 
-            "numCPU" : "20",
-            "expose_hw_virt_to_guest" : "yes",
-            "memoryGB" : "384",
-            "harddisks" : [{
-                "storage_GB" : "16"
-            },
-            {
-                "storage_GB" : "40"
-            },
-            {
-                "storage_GB" : "250"
-            }],
-            "CD_path" : "[datastore1] ISO/VMware-ESXi-9.0.0.iso",
-            "deploy_to_physical_host" : 0
-        },{
-            "name_of_vm" : "<enter value here>",
-            "nested_esxi_hostname" : "<enter value here>",
-            "nested_esxi_ip_address" : "<enter value here>", 
-            "numCPU" : "20",
-            "expose_hw_virt_to_guest" : "yes",
-            "memoryGB" : "384",
-            "harddisks" : [{
-                "storage_GB" : "16"
-            },
-            {
-                "storage_GB" : "40"
-            },
-            {
-                "storage_GB" : "250"
-            }],
-            "CD_path" : "[datastore1] ISO/VMware-ESXi-9.0.0.iso",
-            "deploy_to_physical_host" : 0
-        },{
-            "name_of_vm" : "<enter value here>",
-            "nested_esxi_hostname" : "<enter value here>",
-            "nested_esxi_ip_address" : "<enter value here>", 
-            "numCPU" : "20",
-            "expose_hw_virt_to_guest" : "yes",
-            "memoryGB" : "384",
-            "harddisks" : [{
-                "storage_GB" : "16"
-            },
-            {
-                "storage_GB" : "40"
-            },
-            {
-                "storage_GB" : "250"
-            }],
-            "CD_path" : "[datastore1] ISO/VMware-ESXi-9.0.0.iso",
-            "deploy_to_physical_host" : 0
-        }]}
+            "CD_path" : "<enter value here>",
+            "deploy_to_physical_host" : 0,
+            "deploy_to_datastore" : 0
+        }]
+    }
 }
