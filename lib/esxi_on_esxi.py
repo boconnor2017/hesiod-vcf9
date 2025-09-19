@@ -67,12 +67,15 @@ def pcli_create_vms_from_iso(host_specs):
     while i < len(host_specs):
         print("Test"+ str(i)+": "+host_specs[i]["name_of_vm"])
         i=i+1
-    script_file_name = "pcli_create_vm_from_iso.ps1"
-    script_raw = populate_var_from_file("lib/scripts/pcli_create_vm_from_iso.script")
-    script = script_raw.splitlines()
-    #Continue here... need to edit the parameters of script from vm.json
-    write_script_to_script_file(script, script_file_name)
-    pcli_execute(script_file_name)
+    set_vm_keystrokes_script_name = "Set-VMKeystrokes.ps1"
+    set_vm_keystrokes_script_raw = populate_var_from_file("lib/scripts/pcli_set_vm_keystrokes.script")
+    set_vm_keystrokes_script = set_vm_keystrokes_script_raw.splitlines()
+    write_script_to_script_file(set_vm_keystrokes_script, set_vm_keystrokes_script_name)
+    create_vm_from_iso_script_name = "pcli_create_vm_from_iso.ps1"
+    create_vm_from_iso_script_raw = populate_var_from_file("lib/scripts/pcli_create_vm_from_iso.script")
+    create_vm_from_iso_script = create_vm_from_iso_script_raw.splitlines()
+    write_script_to_script_file(create_vm_from_iso_script, create_vm_from_iso_script_name)
+    #pcli_execute(script_file_name)
 
 def pcli_execute(script_file_name):
     cmd = []

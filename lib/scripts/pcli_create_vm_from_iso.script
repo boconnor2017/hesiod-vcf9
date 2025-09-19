@@ -8,7 +8,7 @@ $esxi_server_datastore = "datastore2"
 $path_to_iso_on_datastore = "[datastore1] ISO/VMware-ESXi-9.0.0.iso"
 
 # VM Input Variables
-$vm_name = "test-07b"
+$vm_name = "test-09"
 $vm_cpu = 24
 $vm_memoryMB = (384*1024)
 $vm_disk1GB = 16
@@ -16,13 +16,15 @@ $vm_disk2GB = 40
 $vm_disk3GB = 1024
 $vm_network = "VM Network"
 
+# Nested ESXi Variables
+$nested_esxi_ip = "172.16.10.23"
+$nested_esxi_subnet = "255.255.255.0"
+$nested_esxi_gateway = "172.16.10.1"
+$nested_esxi_dns = "172.16.10.9", "8.8.8.8"
+$nested_esxi_hostname = "hesvcf-esx08.hesiod.local"
+
 
 ### * * * * * * Try not to change anything below this point * * * * * * * *
-
-# Import Modules
-Import-Module VMware.PowerCLI
-Import-Module VMware.VimAutomation.Common
-Import-Module VMware.VimAutomation.Core
 
 # Ignore https cert errors
 Set-PowerCLIConfiguration -InvalidCertificateAction ignore -Confirm:$false
@@ -50,12 +52,6 @@ $vm_config_spec = New-Object VMware.Vim.VirtualMachineConfigSpec
 $vm_config_spec.Firmware = [VMware.Vim.GuestOsDescriptorFirmwareType]::efi
 $vm_config_spec.NestedHVEnabled = $true
 
-# VM Config Specs: Set Guest Properties
-#$guest_specs = New-Object VMware.Vim.GuestInfo
-#$guest_specs.GuestId = "vmkernel9Guest"
-#$guest_specs.GuestFamily = "otherGuestFamily"
-#$guest_specs.GuestFullName = "VMware ESXi 9.0 or later"
-
 # VM Config Specs: Establish Flags
 $vm_flags = New-Object VMware.Vim.VirtualMachineFlagInfo
 $vm_flags.VbsEnabled = $true
@@ -69,7 +65,7 @@ $vm_config_spec.BootOptions = $vm_boot_options
 $cd = New-Object -TypeName VMware.Vim.VirtualMachineBootOptionsBootableCdromDevice
 $bootDisk = New-Object -TypeName VMware.Vim.VirtualMachineBootOptionsBootableDiskDevice
 $bootDisk.DeviceKey = ($disks[1]).ExtensionData.Key
-$vm_config_spec.BootOptions.BootOrder = $cd,$bootDisk
+$vm_config_spec.BootOptions.BootOrder = $bootDisk,$cd
 
 # Reconfigure VM to specs
 $nested_esxi_vm.ExtensionData.ReconfigVM($vm_config_spec)
@@ -77,4 +73,116 @@ $nested_esxi_vm.ExtensionData.ReconfigVM($vm_config_spec)
 # Start VM
 Start-vm -vm $nested_esxi_vm.Name
 
+# Pause for initial boot
+Start-Sleep -Seconds 120
 
+# Establish Set-VMKeystrokes file as a function
+. .\Set-VMKeystrokes.ps1
+
+# Install ESXi using Keystrokes
+Set-VMKeystrokes -VMName $nested_esxi_vm.Name -ReturnCarriage $true
+Start-Sleep -Seconds 1
+Set-VMKeystrokes -VMName $nested_esxi_vm.Name -SpecialKeyInput "F11"
+Start-Sleep -Seconds 30
+Set-VMKeystrokes -VMName $nested_esxi_vm.Name -SpecialKeyInput "KeyDown"
+Start-Sleep -Seconds 1
+Set-VMKeystrokes -VMName $nested_esxi_vm.Name -SpecialKeyInput "KeyEnter"
+Start-Sleep -Seconds 1
+Set-VMKeystrokes -VMName $nested_esxi_vm.Name -SpecialKeyInput "KeyEnter"
+Start-Sleep -Seconds 1
+Set-VMKeystrokes -VMName $nested_esxi_vm.Name -StringInput "VMware123!"
+Start-Sleep -Seconds 1
+Set-VMKeystrokes -VMName $nested_esxi_vm.Name -SpecialKeyInput "KeyDown"
+Start-Sleep -Seconds 1
+Set-VMKeystrokes -VMName $nested_esxi_vm.Name -StringInput "VMware123!"
+Start-Sleep -Seconds 1
+Set-VMKeystrokes -VMName $nested_esxi_vm.Name -SpecialKeyInput "KeyEnter"
+Start-Sleep -Seconds 1
+Set-VMKeystrokes -VMName $nested_esxi_vm.Name -SpecialKeyInput "KeyEnter"
+Start-Sleep -Seconds 1
+Set-VMKeystrokes -VMName $nested_esxi_vm.Name -SpecialKeyInput "KeyEnter"
+Start-Sleep -Seconds 1
+Set-VMKeystrokes -VMName $nested_esxi_vm.Name -SpecialKeyInput "F11"
+Start-Sleep -Seconds 30
+Set-VMKeystrokes -VMName $nested_esxi_vm.Name -SpecialKeyInput "KeyEnter"
+
+# Pause for installation
+Start-Sleep -Seconds 120
+
+# First Time Login
+Set-VMKeystrokes -VMName $nested_esxi_vm.Name -SpecialKeyInput "F2"
+Start-Sleep -Seconds 1
+Set-VMKeystrokes -VMName $nested_esxi_vm.Name -StringInput "root"
+Start-Sleep -Seconds 1
+Set-VMKeystrokes -VMName $nested_esxi_vm.Name -SpecialKeyInput "KeyDown"
+Start-Sleep -Seconds 1
+Set-VMKeystrokes -VMName $nested_esxi_vm.Name -StringInput "VMware123!"
+Start-Sleep -Seconds 1
+Set-VMKeystrokes -VMName $nested_esxi_vm.Name -SpecialKeyInput "KeyEnter"
+Start-Sleep -Seconds 5
+Set-VMKeystrokes -VMName $nested_esxi_vm.Name -SpecialKeyInput "KeyDown"
+Start-Sleep -Seconds 1
+Set-VMKeystrokes -VMName $nested_esxi_vm.Name -SpecialKeyInput "KeyEnter"
+Start-Sleep -Seconds 1
+Set-VMKeystrokes -VMName $nested_esxi_vm.Name -SpecialKeyInput "KeyDown"
+Start-Sleep -Seconds 1
+Set-VMKeystrokes -VMName $nested_esxi_vm.Name -SpecialKeyInput "KeyDown"
+Start-Sleep -Seconds 1
+Set-VMKeystrokes -VMName $nested_esxi_vm.Name -SpecialKeyInput "KeyEnter"
+Start-Sleep -Seconds 1
+Set-VMKeystrokes -VMName $nested_esxi_vm.Name -SpecialKeyInput "KeyDown"
+Start-Sleep -Seconds 1
+Set-VMKeystrokes -VMName $nested_esxi_vm.Name -SpecialKeyInput "KeyDown"
+Start-Sleep -Seconds 1
+Set-VMKeystrokes -VMName $nested_esxi_vm.Name -StringInput " "
+Start-Sleep -Seconds 1
+Set-VMKeystrokes -VMName $nested_esxi_vm.Name -SpecialKeyInput "KeyDown"
+Start-Sleep -Seconds 1
+Set-VMKeystrokes -VMName $nested_esxi_vm.Name -StringInput $nested_esxi_ip
+Start-Sleep -Seconds 1
+Set-VMKeystrokes -VMName $nested_esxi_vm.Name -SpecialKeyInput "KeyDown"
+Start-Sleep -Seconds 1
+Set-VMKeystrokes -VMName $nested_esxi_vm.Name -StringInput $nested_esxi_subnet
+Start-Sleep -Seconds 1
+Set-VMKeystrokes -VMName $nested_esxi_vm.Name -SpecialKeyInput "KeyDown"
+Start-Sleep -Seconds 1
+Set-VMKeystrokes -VMName $nested_esxi_vm.Name -StringInput $nested_esxi_gateway
+Start-Sleep -Seconds 1
+Set-VMKeystrokes -VMName $nested_esxi_vm.Name -SpecialKeyInput "KeyEnter"
+Start-Sleep -Seconds 5
+Set-VMKeystrokes -VMName $nested_esxi_vm.Name -SpecialKeyInput "KeyDown"
+Start-Sleep -Seconds 1
+Set-VMKeystrokes -VMName $nested_esxi_vm.Name -SpecialKeyInput "KeyEnter"
+Start-Sleep -Seconds 1
+Set-VMKeystrokes -VMName $nested_esxi_vm.Name -StringInput " "
+Start-Sleep -Seconds 1
+Set-VMKeystrokes -VMName $nested_esxi_vm.Name -SpecialKeyInput "KeyEnter"
+Start-Sleep -Seconds 1
+Set-VMKeystrokes -VMName $nested_esxi_vm.Name -SpecialKeyInput "KeyDown"
+Start-Sleep -Seconds 1
+Set-VMKeystrokes -VMName $nested_esxi_vm.Name -SpecialKeyInput "KeyEnter"
+Start-Sleep -Seconds 1
+Set-VMKeystrokes -VMName $nested_esxi_vm.Name -SpecialKeyInput "KeyDown"
+Start-Sleep -Seconds 1
+Set-VMKeystrokes -VMName $nested_esxi_vm.Name -StringInput " "
+Start-Sleep -Seconds 1
+Set-VMKeystrokes -VMName $nested_esxi_vm.Name -SpecialKeyInput "KeyDown"
+Start-Sleep -Seconds 1
+Set-VMKeystrokes -VMName $nested_esxi_vm.Name -StringInput $nested_esxi_dns[0]
+Start-Sleep -Seconds 1
+Set-VMKeystrokes -VMName $nested_esxi_vm.Name -SpecialKeyInput "KeyDown"
+Start-Sleep -Seconds 1
+Set-VMKeystrokes -VMName $nested_esxi_vm.Name -StringInput $nested_esxi_dns[1]
+Start-Sleep -Seconds 1
+Set-VMKeystrokes -VMName $nested_esxi_vm.Name -SpecialKeyInput "KeyDown"
+Start-Sleep -Seconds 1
+Set-VMKeystrokes -VMName $nested_esxi_vm.Name -StringInput $nested_esxi_hostname
+Start-Sleep -Seconds 1
+Set-VMKeystrokes -VMName $nested_esxi_vm.Name -SpecialKeyInput "KeyEnter"
+Start-Sleep -Seconds 1
+Set-VMKeystrokes -VMName $nested_esxi_vm.Name -SpecialKeyInput "KeyESC"
+Start-Sleep -Seconds 1
+Set-VMKeystrokes -VMName $nested_esxi_vm.Name -StringInput "Y"
+
+# Pause for First Reboot
+Start-Sleep -Seconds 120
