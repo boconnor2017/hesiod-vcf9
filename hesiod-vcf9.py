@@ -137,7 +137,12 @@ def depot_config():
     depot.run_nginx_docker_container(depot_manifest_json_py["depot_config"]["nginx_container_image"], depot_manifest_json_py["depot_config"]["nginx_container_name"], depot_manifest_json_py["depot_config"]["nginx_conf_path"], depot_manifest_json_py["depot_config"]["ssl_cert_path"], depot_manifest_json_py["depot_config"]["ssl_key_path"], depot_manifest_json_py["depot_config"]["htpasswd_path"], depot_manifest_json_py["depot_config"]["docker_network_name"])
 
 def esxi_on_esxi(mgt, vi):
+    err = "Creating virtual machines from ISO."
+    liblog.write_to_logs(err, logfile_name)
     eoe.pcli_create_vms_from_iso(env_json_py, mgt, vi)
+    err = "Preppig nested hosts for VCF."
+    liblog.write_to_logs(err, logfile_name)
+    eoe.pcli_prep_hosts_for_vcf(env_json_py, mgt, vi)
 
 def help_menu():
     print("HELP MENU: hesiod-vcf9.py [options]")

@@ -1,13 +1,13 @@
 #!/bin/sh
 
-# Server Input Variables - Edit This as Needed
-$vmhosts="<ip1>", "<ip2>", "<ip3>", "<ipN>"
-$ntp="pool.ntp.org"
-$esxi_user="root"
-$esxi_pwd="<password>"
-$vSwitch="vSwitch0" 
-$pg="VM Network"
-$vlanId="0" 
+# Server Input Variables
+$vmhosts=ID:SIV-002
+$ntp="ID:SIV-002"
+$esxi_user="ID:SIV-003"
+$esxi_pwd="ID:SIV-004"
+$vSwitch="ID:SIV-005" 
+$pg="ID:SIV-006"
+$vlanId="ID:SIV-07" 
 $fwExceptions="NTP Client"
 
 # # # # # # DON'T EDIT ANYTHING BELOW HERE # # # # # # # # # 
@@ -17,7 +17,7 @@ Set-PowerCLIConfiguration -InvalidCertificateAction ignore -Confirm:$false
 $vmhosts | Foreach-Object {Connect-VIserver $_ -User $esxi_user -Password $esxi_pwd}
 $vmhosts | Foreach-Object {Get-VMHost -Name $_ | Set-VMHost -State Connected}
 
-Foreach ($host in $vmhosts){
+Foreach ($nested_esxi in $vmhosts){
     Add-VMHostNtpServer -NtpServer $ntp -ErrorAction "SilentlyContinue"
     Get-VMHostService | Where-Object {$_.key -eq "ntpd"} | Set-VMHostService -policy "on" -Confirm:$false | Start-VMHostService -Confirm:$false 
     Get-VMHostService | Where-Object {$_.key -eq "TSM-SSH"} | Set-VMHostService -policy "on" -Confirm:$false | Restart-VMHostService -Confirm:$false
@@ -28,7 +28,16 @@ Foreach ($host in $vmhosts){
 
 Foreach ($svc in $fwExceptions){
     Get-VMHostFirewallException | where {$_.name -eq $svc} | Set-VMhostFirewallException -Enabled:$true
-	}
+}
 
-
-
+# Rotate Self Signed Certs
+$cred = New-Object -TypeName PSCredential -ArgumentList $esxi_user,(ConvertTo-SecureString -String $esxi_pwd -AsPlainText -Force)
+$cmdSub = '/sbin/generate-certificates'
+$vmhosts | Foreach-Object {Connect-VIserver $_ -User $esxi_user -Password $esxi_pwd}
+$vmhosts | Foreach-Object {Get-VMHost -Name $_ | Set-VMHost -State Connected}
+Foreach ($nested_esxi in $vmhosts){
+    $session = New-SSHSession -ComputerName $nested_esxi -Credential $cred –AcceptKey
+    Invoke-SSHCommand -SSHSession $session -Command $cmdSub
+    Remove-SSHSession -SSHSession $session | Out-Null
+    Restart-VMHost -VMHost $nested_esxi -Confirm:$false -Force | Out-Null
+}
