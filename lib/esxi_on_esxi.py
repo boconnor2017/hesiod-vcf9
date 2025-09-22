@@ -121,7 +121,7 @@ def pcli_execute(script_file_name):
     err = subprocess.run(cmd, capture_output=True)
     return err
 
-def pcli_prep_hosts_for_vcf(env_json_py, mgt, vi):
+def pcli_prep_hosts_for_vcf(env_json_py, mgt, vi): 
     # Import prep esxi hosts for vcf script
     prep_esxi_hosts_for_vcf_script_name = "pcli_prep_esxi_hosts_for_vcf.ps1"
     prep_esxi_hosts_for_vcf_script_raw = populate_var_from_file("lib/scripts/prep_esxi_hosts_for_vcf.script")
