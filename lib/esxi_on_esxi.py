@@ -124,7 +124,7 @@ def pcli_execute(script_file_name):
 def pcli_prep_hosts_for_vcf(env_json_py, mgt, vi): 
     # Import prep esxi hosts for vcf script
     prep_esxi_hosts_for_vcf_script_name = "pcli_prep_esxi_hosts_for_VCF.ps1"
-    prep_esxi_hosts_for_vcf_script_raw = populate_var_from_file("lib/scripts/prep_esxi_hosts_for_VCF.script")
+    prep_esxi_hosts_for_vcf_script_raw = populate_var_from_file("lib/scripts/pcli_prep_esxi_hosts_for_VCF.script")
     prep_esxi_hosts_for_vcf_script = prep_esxi_hosts_for_vcf_script_raw.splitlines()
     write_script_to_script_file(prep_esxi_hosts_for_vcf_script, prep_esxi_hosts_for_vcf_script_name)
     # Customize the script for Management
