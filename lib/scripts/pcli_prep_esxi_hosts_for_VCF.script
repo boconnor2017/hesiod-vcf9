@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Server Input Variables
-$vmhosts=ID:SIV-002
+$vmhosts=ID:SIV-001
 $ntp="ID:SIV-002"
 $esxi_user="ID:SIV-003"
 $esxi_pwd="ID:SIV-004"
