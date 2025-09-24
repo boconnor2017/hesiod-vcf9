@@ -31,6 +31,7 @@ Foreach ($svc in $fwExceptions){
 }
 
 # Rotate Self Signed Certs
+Get-SSHTrustedHost | Remove-SSHTrustedHost
 $cred = New-Object -TypeName PSCredential -ArgumentList $esxi_user,(ConvertTo-SecureString -String $esxi_pwd -AsPlainText -Force)
 $cmdSub = '/sbin/generate-certificates'
 $vmhosts | Foreach-Object {Connect-VIserver $_ -User $esxi_user -Password $esxi_pwd}

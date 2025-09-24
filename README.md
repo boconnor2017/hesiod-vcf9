@@ -60,33 +60,38 @@ cp -r hesiod/python/ hesiod-vcf9/hesiod
 cd hesiod-vcf9/
 ```
 
-Next, select from one of the following paths:
+Next, select from one of the following modules (note the dependencies):
 
-| Path   | Description | Dependencies | 
+| Module   | Description | Dependencies | 
 |--------|-------------|--------------|
-| Path 1 | Build a New VCF 9 Configuration JSON File | Do this first - no dependencies. Save the populated json file to a repository for future use. |
-| Path 2 | Document VCF 9 Configuration JSON File as Markdown | When your configuration file is populated, use this path to convert the parameters from the JSON into a Markdown file. This is helpful to document configuration details and to validate configuration inconsistencies before deploying the platform. |
-| Path 3 | Deploy an Offline Depot to Store Binaries| Use this path to create an Offline Depot to store VCF binary files. Binaries will need to be downloaded manually using appropriate entitlements. |
-| Path 4 | Build a VCF 9 Ready Nested Management Cluster | Deploys and configures 4x nested ESXi 9 hosts. These hosts will be the target for the VCF 9 installation process. |
-| Path 5 | Build a VCF 9 Ready Nested VI Cluster | Deploys and configures 4x nested ESXi 9 hosts. These hosts will be the target for VCF 9 workloads. This is useful capacity for automation, operations, and other services use cases such as VMaaS, CaaS, DBaaS, LBaaS, FWaaS, and K8aaS. |
+| Module 1 | Build lab environment JSON File | Do this only if you want a CLI prompt to create your first `lab_environment.json` file. You can edit `json/lab_environment.json` directly if you want. Once completed, save the json file to a repository so you can skip this step in the future. | None. This step is optional. |
+| Module 2 | Build lab environment documentation | When your `lab_environment.json` file is populated, do this to convert the parameters from the JSON into a Markdown file. This is helpful to document configuration details and to validate configuration inconsistencies before deploying the platform. | Module 1. This step is optional. |
+| Module 3 | Deploy an Offline Depot to Store Binaries | Do this to create an Offline Depot to store VCF binary files. Binaries will need to be downloaded manually using appropriate entitlements. This step is optional if you prefer to use an Online Depot. | None. |
+| Module 4 | Build a VCF 9 Ready Nested Management Cluster | Deploys and configures 4x nested ESXi 9 hosts. These hosts will be the target for the VCF 9 installation process. | Prerequisites above need to be completed. Module 1 `lab_environment.json` needs to be populated. |
+| Module 5 | Deploy VCF 9 Fleet | Uses the VCF 9 Installer API to deploy the VCF management workload domain (fleet), including VCF Operations and VCF Automation. | Prerequisites above need to be completed. Module 1 `lab_environment.json` needs to be populated. Module 4 Nested Management Cluster needs to be deployed. |
+| Module 6 | Build a VCF 9 Ready Nested VI Cluster | Deploys and configures 4x nested ESXi 9 hosts. These hosts will be the target for VCF 9 workloads. This is useful capacity for automation, operations, and other services use cases such as VMaaS, CaaS, DBaaS, LBaaS, FWaaS, and K8aaS. | Prerequisites above need to be completed. Module 1 `lab_environment.json` needs to be populated.  |
+| Module 7 | Build a VCF 9 VI Workload Domain | Uses the VCF 9 Operations Manager API to deploy a VCF VI workload domain, including Supervisor Cluster and VPC for modern VCF Automation workloads. | Prerequisites above need to be completed. Module 1 `lab_environment.json` needs to be populated. Module 6 Nested VI Cluster needs to be deployed. |
+| Module 8 | Deploy "Hello World" VM as a Service | Uses the VCF 9 Automation API to deploy a "Hello World" VM as a Service using Photon as the Linux image. | Prerequisites above need to be completed. Module 1 `lab_environment.json` needs to be populated. Module 7 VI Workload Domain needs to be deployed. |
+| Module 9 | Deploy "Hello World" Container as a Service | Uses the VCF 9 Automation API to deploy a "Hello World" Container as a Service using Docker on Photon as the container orchestration engine. | Prerequisites above need to be completed. Module 1 `lab_environment.json` needs to be populated. Module 8 VM as a Service needs to be deployed. |
+| Module 10 | Deploy "Hello World" Database as a Service | Uses the VCF 9 Automation API to deploy a "Hello World" Database as a Service using open source PostgreSQL on Photon as the database platform. | Prerequisites above need to be completed. Module 1 `lab_environment.json` needs to be populated. Module 8 VM as a Service needs to be deployed. |
 
 
 
-## PATH 1: Build a New VCF 9 Configuration JSON File
+## Module 1: Build lab environment JSON File (Optional)
 
 Run the following command from Photon:
 ```
 python3 hesiod-vcf9.py -configjson
 ```
 
-## PATH 2: Document VCF 9 Configuration JSON File as Markdown
+## Module 2: Build lab environment documentation (Optional)
 
 Run the following command from Photon:
 ```
 python3 hesiod-vcf9.py -json2md myconfigfile.json mydocfile.md
 ```
 
-## PATH 3: Deploy an Offline Depot to Store Binaries
+## Module 3: Deploy an Offline Depot to Store Binaries (Optional)
 
 * Step 1: Deploy a new PhotonOS VM with **140GB** vDisk. 
 * Step 2: Follow [Hesiod Photon OS Quick Start](https://github.com/boconnor2017/hesiod/blob/main/photon/readme.md) steps to prep the Photon server for VCF.
@@ -176,10 +181,28 @@ cd /usr/local/drop
 vcf-download-tool/bin/./vcf-download-tool binaries download --depot-store=/usr/local/drop/PROD --depot-download-token-file=downloadtoken.txt --vcf-version=9.0.0
 ```
 
-## PATH 4: Deploy a VCF 9 Ready Nested Management Cluster
+## Module 4: Build a VCF 9 Ready Nested Management Cluster
 
 * Step 1: Edit the `lab_environment.json` file (recommended: store this file in `usr/local/drop` for future use)
 * Step 2: Run the following command from Hesiod:
 ```
 python3 hesiod-vcf9.py -eoe-mgt
 ```
+
+## Module 5: Deploy VCF 9 Fleet
+Coming soon...
+
+## Module 6: Build a VCF 9 Ready Nested VI Cluster
+Coming soon...
+
+## Module 7: Build a VCF 9 VI Workload Domain
+Coming soon...
+
+## Module 8: Deploy "Hello World" VM as a Service
+Coming soon...
+
+## Module 9: Deploy "Hello World" Container as a Service
+Coming soon...
+
+## Module 10: Deploy "Hello World" Database as a Service 
+Coming soon...
