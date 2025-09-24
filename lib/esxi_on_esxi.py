@@ -34,7 +34,7 @@ def pcli_create_vms_from_iso(env_json_py, mgt, vi):
     temp_script = []
     # Customize the script for Management
     if mgt:
-        print("Building nested management cluster:")
+        print("Building nested management cluster (estimated time = 40min):")
         i=0
         while i < len(env_json_py["nested_esxi_servers"]["management_host_specs"]):
             print("    Creating ESXi Host"+ str(i)+": "+env_json_py["nested_esxi_servers"]["management_host_specs"][i]["name_of_vm"])
