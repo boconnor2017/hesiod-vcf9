@@ -105,9 +105,9 @@ def pcli_prep_hosts_for_vcf(env_json_py, mgt, vi):
         i=0
         while i < len(env_json_py["nested_esxi_servers"]["management_host_specs"]):
             print("    Prepping ESXi Host"+ str(i)+": "+env_json_py["nested_esxi_servers"]["management_host_specs"][i]["name_of_vm"])
-            # Create list of hosts
-            hostlist = "\""+hostlist+env_json_py["nested_esxi_servers"]["management_host_specs"][i]["nested_esxi_ip_address"]+"\", "
-            # Lookup network
+            # Create list of nested hosts
+            hostlist = hostlist+"\""+env_json_py["nested_esxi_servers"]["management_host_specs"][i]["nested_esxi_ip_address"]+"\", "
+            # Lookup physical network portgroup
             search_and_replace_in_file("ID:SIV-006", env_json_py["physical_server"][env_json_py["nested_esxi_servers"]["management_host_specs"][i]["deploy_to_physical_host"]]["deploy_vms_to_this_network"], prep_esxi_hosts_for_vcf_script_name)
             i=i+1
         # Remove comma from the last host

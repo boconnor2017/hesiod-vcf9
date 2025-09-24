@@ -7,7 +7,7 @@ $esxi_user="ID:SIV-003"
 $esxi_pwd="ID:SIV-004"
 $vSwitch="ID:SIV-005"
 $pg="ID:SIV-006"
-$vlanId="ID:SIV-07"
+$vlanId="ID:SIV-007"
 $fwExceptions="NTP Client"
 
 # # # # # # DON'T EDIT ANYTHING BELOW HERE # # # # # # # # #
