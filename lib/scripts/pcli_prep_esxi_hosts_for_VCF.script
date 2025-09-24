@@ -42,3 +42,6 @@ Foreach ($nested_esxi in $vmhosts){
     Remove-SSHSession -SSHSession $session | Out-Null
     Restart-VMHost -VMHost $nested_esxi -Confirm:$false -Force | Out-Null
 }
+
+# Pause for reboots
+Start-Sleep -Seconds 120
