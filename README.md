@@ -114,7 +114,54 @@ python3 hesiod-vcf9.py -json2md myconfigfile.json mydocfile.md
     * Check the filesystem size (GBs): `df -BG`
     * Resize the filesystem: `resize2fs /dev/sda2`
     * Recheck the filesystem size (GBs): `df -BG`
-* Step 4: Build Web Service
+* Step 4: Download Offline Depot Metadata
+```
+cd /usr/local/drop/
+```
+Download the `vcf-9.x.x.x-offline-depot-metadata.zip` file and the `vcf-download-tool-9.x.x.x.x.tar.gz` files from the Boradcom Portal.
+```
+root@photon-machine [ /usr/local/drop ]# ls -l
+total 1164
+-rw-r----- 1 root root 1191522 Aug 14 14:11 vcf-9.0.0.0-offline-depot-metadata.zip
+```
+* Step 5: Create a new file called `downloadtoken.txt` and paste your VCF 9 entitled Download Token into the text file.
+```
+root@photon-machine [ /usr/local/drop ]# ls -l
+total 375864
+-rw-r----- 1 root root        33 Aug 20 13:26 downloadtoken.txt
+-rw-r----- 1 root root   1191522 Aug 20 13:23 vcf-9.0.0.0-offline-depot-metadata.zip
+-rw-r----- 1 root root 383684630 Aug 20 13:23 vcf-download-tool-9.0.0.0100.24880038.tar.gz
+
+```
+* Step 6: Configure TCP Keepalive
+```
+vi /etc/ssh/sshd_config
+```
+```
+TCPKeepAlive yes
+```
+* Step 7: create a folder for the download tool and move the download tool to the new folder
+```
+mkdir /usr/local/drop/vcf-download-tool
+```
+```
+mv vcf-download-tool-9.0.0.0100.24880038.tar.gz /usr/local/drop/vcf-download-tool
+```
+```
+cd /usr/local/drop/vcf-download-tool
+```
+* Step 8: Extract the Download Tool
+```
+tar -xvf vcf-download-tool-9.0.0.0100.24880038.tar.gz
+```
+* Step 9: Download the VCF 9 Binaries from the Broadcom Portal
+```
+cd /usr/local/drop
+```
+```
+vcf-download-tool/bin/./vcf-download-tool binaries download --depot-store=/usr/local/drop/PROD --depot-download-token-file=downloadtoken.txt --vcf-version=9.0.0
+```
+* Step 10: Build Web Service
 ```
 cd /usr/local/
 ```
@@ -131,55 +178,7 @@ cd /usr/local/hesiod-vcf9/
 python3 hesiod-vcf9.py -depot
 ```   
 
-Access your web server at https://<ip_address>   
-
-### Setting Up your Offline Depot
-```
-cd /usr/local/drop/
-```
-* Step 5: Download the `vcf-9.x.x.x-offline-depot-metadata.zip` file and the `vcf-download-tool-9.x.x.x.x.tar.gz` files from the Boradcom Portal.
-```
-root@photon-machine [ /usr/local/drop ]# ls -l
-total 1164
--rw-r----- 1 root root 1191522 Aug 14 14:11 vcf-9.0.0.0-offline-depot-metadata.zip
-```
-* Step 6: Create a new file called `downloadtoken.txt` and paste your VCF 9 entitled Download Token into the text file.
-```
-root@photon-machine [ /usr/local/drop ]# ls -l
-total 375864
--rw-r----- 1 root root        33 Aug 20 13:26 downloadtoken.txt
--rw-r----- 1 root root   1191522 Aug 20 13:23 vcf-9.0.0.0-offline-depot-metadata.zip
--rw-r----- 1 root root 383684630 Aug 20 13:23 vcf-download-tool-9.0.0.0100.24880038.tar.gz
-
-```
-* Step 7: Configure TCP Keepalive
-```
-vi /etc/ssh/sshd_config
-```
-```
-TCPKeepAlive yes
-```
-* Step 8: create a folder for the download tool and move the download tool to the new folder
-```
-mkdir /usr/local/drop/vcf-download-tool
-```
-```
-mv vcf-download-tool-9.0.0.0100.24880038.tar.gz /usr/local/drop/vcf-download-tool
-```
-```
-cd /usr/local/drop/vcf-download-tool
-```
-* Step 9: Extract the Download Tool
-```
-tar -xvf vcf-download-tool-9.0.0.0100.24880038.tar.gz
-```
-* Step 10: Download the VCF 9 Binaries from the Broadcom Portal
-```
-cd /usr/local/drop
-```
-```
-vcf-download-tool/bin/./vcf-download-tool binaries download --depot-store=/usr/local/drop/PROD --depot-download-token-file=downloadtoken.txt --vcf-version=9.0.0
-```
+Access your Offline Depot at https://<ip_address>   
 
 ## Module 4: Build a VCF 9 Ready Nested Management Cluster
 
