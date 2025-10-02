@@ -47,6 +47,10 @@ New-HardDisk -VM $nested_esxi_vm -CapacityGB $vm_disk2GB -Persistence persistent
 New-HardDisk -VM $nested_esxi_vm -CapacityGB $vm_disk3GB -Persistence persistent
 $disks = Get-HardDisk -VM $nested_esxi_vm
 
+# Delete Dafault First Disk (vSAN readiness config)
+Remove-HardDisk -HardDisk $disks[0] -Confirm:$false
+$disks = Get-HardDisk -VM $nested_esxi_vm
+
 # VM Config Specs: Enable CPU Hardware Virtualization Passthrough
 $vm_config_spec = New-Object VMware.Vim.VirtualMachineConfigSpec
 $vm_config_spec.Firmware = [VMware.Vim.GuestOsDescriptorFirmwareType]::efi
