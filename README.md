@@ -81,7 +81,7 @@ Next, select from one of the following modules (note the dependencies):
 
 Run the following command from Photon:
 ```
-python3 hesiod-vcf9.py -configjson
+python3 hesiod-vcf9.py -lab-json
 ```
 
 ## Module 2: Build lab environment documentation (Optional)

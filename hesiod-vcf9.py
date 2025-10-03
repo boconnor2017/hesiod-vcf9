@@ -7,6 +7,7 @@ from hesiod import lib_paramiko as libpko
 # Import VCF libraries
 from lib import vcf9_depot as depot
 from lib import esxi_on_esxi as eoe
+from lib import lab_env_prompt as labjson
 
 # Import Standard Python libraries
 import os
@@ -69,6 +70,13 @@ def _main_(args):
         err = "   -eoe-mgt found. Initiating ESXi on ESXi (VI cluster)."
         liblog.write_to_logs(err, logfile_name)
         esxi_on_esxi(mgt, vi)
+        sys.exit()
+    if '-lab-json' in args:
+        mgt = False
+        vi = True
+        err = "   -lab-json. Initiating prompt to populate lab_environment.json config file."
+        liblog.write_to_logs(err, logfile_name)
+        lab_env_prompt()
         sys.exit()
     else :
         err = "    No options found. Initiating HELP menu."
@@ -152,5 +160,9 @@ def help_menu():
     print("")
     print("")
 
+def lab_env_prompt():
+    err = "Kicking off prompt for streamlined lab_environment.json file."
+    liblog.write_to_logs(err, logfile_name)
+    labjson.main(env_json_py)
     
 _main_(sys.argv)
