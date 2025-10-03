@@ -192,7 +192,11 @@ python3 hesiod-vcf9.py -eoe-mgt
 Coming soon...
 
 ## Module 6: Build a VCF 9 Ready Nested VI Cluster
-Coming soon...
+* Step 1: Edit the `lab_environment.json` file (recommended: store this file in `usr/local/drop` for future use)
+* Step 2: Run the following command from Hesiod:
+```
+python3 hesiod-vcf9.py -eoe-vi
+```
 
 ## Module 7: Build a VCF 9 VI Workload Domain
 Coming soon...
