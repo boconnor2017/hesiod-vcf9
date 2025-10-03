@@ -82,6 +82,16 @@ Next, select from one of the following modules (note the dependencies):
 Run the following command from Photon:
 ```
 python3 hesiod-vcf9.py -lab-json
+```   
+
+(Optional) When completed, save a copy to `/usr/local/drop` for future use (change version number as needed):
+```
+cp lab_environment.json /usr/local/drop/lab_environment.json_v1
+```   
+
+To incorporate `lab_environment.json` into the following modules, replace `json/lab_environment.json` with the output of this scipt. Example:
+```
+mv /usr/local/drop/lab_environment.json_v1 json/lab_environment.json
 ```
 
 ## Module 2: Build lab environment documentation (Optional)
