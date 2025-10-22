@@ -32,19 +32,18 @@ The following binaries are **required** to run hesiod-vcf9:
 | VCF 9 Download Tool (tar) | version 9.0.0 is required (download from [Broadcom Portal](https://support.broadcom.com/web/ecx)) |
 | VCF 9 Offline Depot Metadata (zip) | version 9.0.0 is required (download from [Broadcom Portal](https://support.broadcom.com/web/ecx)) |
 
-
 The following shared services are **required** to run hesiod-vcf9:
 
 | Requirement | Description |
 |-------------|-------------|
-| DNS | recommended: use [hesiod-dns](https://github.com/boconnor2017/hesiod-dns) to deploy and configure a PhotonOS Docker container running Tanium. |
+| DNS | recommended: use [hesiod-dns](https://github.com/boconnor2017/hesiod-dns) to deploy and configure a PhotonOS Docker container running Tanium. |   
+
+The following Hesiod services are **required** to run hesiod-vcf9: 
+1. Deploy a [Hesiod Node](https://github.com/boconnor2017/hesiod?tab=readme-ov-file#deploy-hesiod-nodes). Run all remaining steps on this node.
+2. Install OVFTool by following the steps in the [Hesiod Install OVFTool on Photon OS](https://github.com/boconnor2017/hesiod/tree/main/ovftool) process.
+3. Install PowerCLI by following the steps in the [Hesiod Install PowerCLI directly to the OS](https://github.com/boconnor2017/hesiod/blob/main/powershell/readme.md) process.   
 
 # Quick Start
-Deploy Photon OS OVA to the physical server. Follow the steps in the [Hesiod Photon OS Quick Start](https://github.com/boconnor2017/hesiod/blob/main/photon/readme.md) readme file to prep the Photon server for VCF. 
-
-Next, install OVFTool by following the steps in the [Hesiod Install OVFTool on Photon OS](https://github.com/boconnor2017/hesiod/tree/main/ovftool) process.
-
-Next, install PowerCLI by following the steps in the [Hesiod Install PowerCLI directly to the OS](https://github.com/boconnor2017/hesiod/blob/main/powershell/readme.md) process.
 
 Run the following scripts as root.
 ```
