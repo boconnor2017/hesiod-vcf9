@@ -37,11 +37,8 @@ The following shared services are **required** to run hesiod-vcf9:
 | Requirement | Description |
 |-------------|-------------|
 | DNS | recommended: use [hesiod-dns](https://github.com/boconnor2017/hesiod-dns) to deploy and configure a PhotonOS Docker container running Tanium. |   
+| Hesiod Node | Deploy a [Hesiod Node](https://github.com/boconnor2017/hesiod?tab=readme-ov-file#deploy-hesiod-nodes). Run all remaining steps on this node. |
 
-The following Hesiod services are **required** to run hesiod-vcf9: 
-1. Deploy a [Hesiod Node](https://github.com/boconnor2017/hesiod?tab=readme-ov-file#deploy-hesiod-nodes). Run all remaining steps on this node.
-2. Install OVFTool by following the steps in the [Hesiod Install OVFTool on Photon OS](https://github.com/boconnor2017/hesiod/tree/main/ovftool) process.
-3. Install PowerCLI by following the steps in the [Hesiod Install PowerCLI directly to the OS](https://github.com/boconnor2017/hesiod/blob/main/powershell/readme.md) process.   
 
 # Quick Start
 
