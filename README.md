@@ -42,12 +42,27 @@ The following shared services are **required** to run hesiod-vcf9:
 
 # Quick Start
 
-Run the following scripts as root.
+Run the following scripts as root on the Hesiod Node.
 ```
 cd /usr/local/
 ```
 ```
+unzip /usr/local/hesiod/ovftool/VMware-ovftool*
+```
+```
 git clone https://github.com/boconnor2017/hesiod-vcf9
+```
+```
+ln -s /usr/local/ovftool/./ovftool /usr/bin/ovftool
+```
+```
+ovftool --version
+```
+```
+pwsh
+```
+```
+Install-Module -Name VMware.PowerCLI
 ```
 ```
 cp -r hesiod/python/ hesiod-vcf9/hesiod
