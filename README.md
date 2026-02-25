@@ -13,7 +13,7 @@ The following physical equipment is **required** to run hesiod-vcf9:
 | Requirement | Description |
 |-------------|-------------|
 | Physical Network | ability to provision multiple /24 VLANs: Management, VLAN, VSAN, NSX |
-| Physical ESXi | at least 1x physical server. See [Lab Sizing Guide](#lab-sizing-guide) below. |
+| Physical ESXi | at least 1x physical server running ESXi 9. See [Lab Sizing Guide](#lab-sizing-guide) below. |
 | DNS Server | recommended: use [hesiod-dns](https://github.com/boconnor2017/hesiod-dns) to spin up an immutable DNS server and configure necessary DNS entries for VCF |
 
 The following binaries are **required** to run hesiod-vcf9:
@@ -62,6 +62,9 @@ pwsh
 Install-Module -Name VMware.PowerCLI
 ```
 ```
+exit
+```
+```
 git clone https://github.com/boconnor2017/hesiod-vcf9
 ```
 ```
@@ -90,7 +93,7 @@ Next, select from one of the following modules (note the dependencies):
 
 ## Module 1: Build lab environment JSON File (Optional)
 
-Run the following command from Photon:
+Run the following command from the Hesiod Node:
 ```
 python3 hesiod-vcf9.py -lab-json
 ```   
@@ -107,16 +110,14 @@ mv /usr/local/drop/lab_environment.json_v1 json/lab_environment.json
 
 ## Module 2: Build lab environment documentation (Optional)
 
-Run the following command from Photon:
+Run the following command from the Hesiod Node:
 ```
 python3 hesiod-vcf9.py -json2md myconfigfile.json mydocfile.md
 ```
 
 ## Module 3: Deploy an Offline Depot to Store Binaries (Optional)
 
-* Step 1: Deploy a new PhotonOS VM with **140GB** vDisk. 
-* Step 2: Follow [Hesiod Photon OS Quick Start](https://github.com/boconnor2017/hesiod/blob/main/photon/readme.md) steps to prep the Photon server for VCF.
-* Step 3: Repartition the disk:
+* Step 1: Repartition the disk on the Hesiod Node:
     * Run fdisk: `fdisk /dev/sda`
     * List Partitions: `p`
     * Delete Partition: `d`
@@ -135,33 +136,32 @@ python3 hesiod-vcf9.py -json2md myconfigfile.json mydocfile.md
     * Check the filesystem size (GBs): `df -BG`
     * Resize the filesystem: `resize2fs /dev/sda2`
     * Recheck the filesystem size (GBs): `df -BG`
-* Step 4: Download Offline Depot Metadata
+* Step 2: Download Offline Depot Metadata
 ```
 cd /usr/local/drop/
 ```
-Download the `vcf-9.x.x.x-offline-depot-metadata.zip` file and the `vcf-download-tool-9.x.x.x.x.tar.gz` files from the Boradcom Portal.
+Download the `vcf-9.x.x.x-offline-depot-metadata.zip` file and the `vcf-download-tool-9.x.x.x.x.tar.gz` files from the Broadcom Portal.
 ```
 root@photon-machine [ /usr/local/drop ]# ls -l
 total 1164
 -rw-r----- 1 root root 1191522 Aug 14 14:11 vcf-9.0.0.0-offline-depot-metadata.zip
 ```
-* Step 5: Create a new file called `downloadtoken.txt` and paste your VCF 9 entitled Download Token into the text file.
+* Step 3: Create a new file called `downloadtoken.txt` and paste your VCF 9 entitled Download Token into the text file.
 ```
 root@photon-machine [ /usr/local/drop ]# ls -l
 total 375864
 -rw-r----- 1 root root        33 Aug 20 13:26 downloadtoken.txt
 -rw-r----- 1 root root   1191522 Aug 20 13:23 vcf-9.0.0.0-offline-depot-metadata.zip
 -rw-r----- 1 root root 383684630 Aug 20 13:23 vcf-download-tool-9.0.0.0100.24880038.tar.gz
-
 ```
-* Step 6: Configure TCP Keepalive
+* Step 4: Configure TCP Keepalive
 ```
 vi /etc/ssh/sshd_config
 ```
 ```
 TCPKeepAlive yes
 ```
-* Step 7: create a folder for the download tool and move the download tool to the new folder
+* Step 5: create a folder for the download tool and move the download tool to the new folder
 ```
 mkdir /usr/local/drop/vcf-download-tool
 ```
@@ -171,27 +171,18 @@ mv vcf-download-tool-9.0.0.0100.24880038.tar.gz /usr/local/drop/vcf-download-too
 ```
 cd /usr/local/drop/vcf-download-tool
 ```
-* Step 8: Extract the Download Tool
+* Step 6: Extract the Download Tool
 ```
 tar -xvf vcf-download-tool-9.0.0.0100.24880038.tar.gz
 ```
-* Step 9: Download the VCF 9 Binaries from the Broadcom Portal
+* Step 7: Download the VCF 9 Binaries from the Broadcom Portal
 ```
 cd /usr/local/drop
 ```
 ```
 vcf-download-tool/bin/./vcf-download-tool binaries download --depot-store=/usr/local/drop/PROD --depot-download-token-file=downloadtoken.txt --vcf-version=9.0.0
 ```
-* Step 10: Build Web Service
-```
-cd /usr/local/
-```
-```
-git clone https://github.com/boconnor2017/hesiod-vcf9
-```
-```
-cp -r hesiod/python/ hesiod-vcf9/hesiod
-```
+* Step 8: Build Web Service
 ```
 cd /usr/local/hesiod-vcf9/
 ```

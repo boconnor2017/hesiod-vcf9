@@ -148,7 +148,7 @@ def esxi_on_esxi(mgt, vi):
     err = "Creating virtual machines from ISO."
     liblog.write_to_logs(err, logfile_name)
     eoe.pcli_create_vms_from_iso(env_json_py, mgt, vi)
-    err = "Preppig nested hosts for VCF."
+    err = "Prepping nested hosts for VCF."
     liblog.write_to_logs(err, logfile_name)
     eoe.pcli_prep_hosts_for_vcf(env_json_py, mgt, vi)
 
