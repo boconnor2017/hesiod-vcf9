@@ -50,9 +50,6 @@ cd /usr/local/
 unzip /usr/local/hesiod/ovftool/VMware-ovftool*
 ```
 ```
-git clone https://github.com/boconnor2017/hesiod-vcf9
-```
-```
 ln -s /usr/local/ovftool/./ovftool /usr/bin/ovftool
 ```
 ```
@@ -63,6 +60,9 @@ pwsh
 ```
 ```
 Install-Module -Name VMware.PowerCLI
+```
+```
+git clone https://github.com/boconnor2017/hesiod-vcf9
 ```
 ```
 cp -r hesiod/python/ hesiod-vcf9/hesiod
