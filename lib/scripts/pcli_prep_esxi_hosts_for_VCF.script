@@ -31,6 +31,8 @@ Foreach ($svc in $fwExceptions){
 }
 
 # Rotate Self Signed Certs
+Find-Module Posh-SSH | Install-Module
+Import-Module Posh-SSH
 Get-SSHTrustedHost | Remove-SSHTrustedHost
 $cred = New-Object -TypeName PSCredential -ArgumentList $esxi_user,(ConvertTo-SecureString -String $esxi_pwd -AsPlainText -Force)
 $cmdSub = '/sbin/generate-certificates'

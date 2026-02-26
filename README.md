@@ -194,8 +194,9 @@ Access your Offline Depot at https://<ip_address>
 
 ## Module 4: Build a VCF 9 Ready Nested Management Cluster
 
-* Step 1: Edit the `lab_environment.json` file (recommended: store this file in `usr/local/drop` for future use)
-* Step 2: Run the following command from Hesiod:
+* Step 1: Upload the ESXi ISO to a datastore on the physical host
+* Step 2: Edit the `lab_environment.json` file (recommended: store this file in `usr/local/drop` for future use)
+* Step 3: Run the following command from Hesiod:
 ```
 python3 hesiod-vcf9.py -eoe-mgt
 ```
