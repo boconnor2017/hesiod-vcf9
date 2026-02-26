@@ -117,6 +117,7 @@ python3 hesiod-vcf9.py -json2md myconfigfile.json mydocfile.md
 
 ## Module 3: Deploy an Offline Depot to Store Binaries (Optional)
 
+* Step 0: Ensure your Hesiod Node has at least **140GB** of storage.
 * Step 1: Repartition the disk on the Hesiod Node:
     * Run fdisk: `fdisk /dev/sda`
     * List Partitions: `p`
