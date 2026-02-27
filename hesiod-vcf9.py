@@ -8,6 +8,7 @@ from hesiod import lib_paramiko as libpko
 from lib import vcf9_depot as depot
 from lib import esxi_on_esxi as eoe
 from lib import lab_env_prompt as labjson
+from lib import vcf9_installer as vcfi
 
 # Import Standard Python libraries
 import os
@@ -20,6 +21,8 @@ vcf_json_str = libjson.populate_var_from_json_file("json", "vcf9_config_template
 vcf_json_py = libjson.load_json_variable(vcf_json_str)
 depot_manifest_json_str = libjson.populate_var_from_json_file("json", "depot_manifest.json")
 depot_manifest_json_py = libjson.load_json_variable(depot_manifest_json_str)
+api_json_str = libjson.populate_var_from_json_file("json", "vcf9_api.json")
+api_json_py = libjson.load_json_variable(api_json_str)
 this_script_name = os.path.basename(__file__)
 logfile_name = env_json_py["logs"][this_script_name]
 
@@ -77,6 +80,11 @@ def _main_(args):
         err = "   -lab-json. Initiating prompt to populate lab_environment.json config file."
         liblog.write_to_logs(err, logfile_name)
         lab_env_prompt()
+        sys.exit()
+    if '-fleet' in args:
+        err = "    -fleet found. Initiating fleet deploy."
+        liblog.write_to_logs(err, logfile_name)
+        install_vcf_fleet()
         sys.exit()
     else :
         err = "    No options found. Initiating HELP menu."
@@ -159,6 +167,21 @@ def help_menu():
     print("--help option to see this menu.")
     print("")
     print("")
+
+def install_vcf_fleet():
+    err = "Retrieving Authentication Token"
+    liblog.write_to_logs(err, logfile_name)
+    token = vcfi.vcf_create_token('https://'+env_json_py["vcf9_installer_fqdn"]+api_json_py["createToken"], "admin@local", env_json_py["universal_authentication"]["mpc_password"])
+    err = "Token: "+token
+    liblog.write_to_logs(err, logfile_name)
+
+    err = "Retrieving Depot Settings"
+    liblog.write_to_logs(err, logfile_name)
+    depot_settings_py = vcfi.vcf_get_depot_settings('https://'+env_json_py["vcf9_installer_fqdn"]+api_json_py["getDepotSettings"], token)
+    depot_settings_str = libjson.dump_json(depot_settings_py)
+    err = "Depot Settings: "+depot_settings_str
+    liblog.write_to_logs(err, logfile_name)
+
 
 def lab_env_prompt():
     err = "Kicking off prompt for streamlined lab_environment.json file."

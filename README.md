@@ -203,7 +203,18 @@ python3 hesiod-vcf9.py -eoe-mgt
 ```
 
 ## Module 5: Deploy VCF 9 Fleet
-Coming soon...
+
+* Step 1: Create `json/vcf9.json` file
+    * Option A: if you do **not** already have a completed vcf9 json file, copy the configuration file in `json/vcf9_config_template.json` to a new file called `vcf9.json` and enter values accordingly
+    * Option B: if you already have a completed vcf9 json file, copy it to `json/vcf9.json` 
+```
+cp json/vcf9_config_template.json json/vcf9.json
+```   
+
+* Step 2: Run the following command from Hesiod:
+```
+python3 hesiod-vcf9.py -fleet
+```
 
 ## Module 6: Build a VCF 9 Ready Nested VI Cluster
 * Step 1: Edit the `lab_environment.json` file (recommended: store this file in `usr/local/drop` for future use)

@@ -1,0 +1,6 @@
+{
+    "version" : "9.0.2.0",
+    "createToken" : "/v1/tokens",
+    "getDepotSettings" : "/v1/system/settings/depot",
+    "getSddcTasks" : "/v1/sddcs"
+}
