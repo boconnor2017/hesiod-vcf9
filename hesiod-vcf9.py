@@ -17,7 +17,7 @@ import sys
 # Import json configuration parameters
 env_json_str = libjson.populate_var_from_json_file("json", "lab_environment.json")
 env_json_py = libjson.load_json_variable(env_json_str)
-vcf_json_str = libjson.populate_var_from_json_file("json", "vcf9_config_template.json")
+vcf_json_str = libjson.populate_var_from_json_file("json", "vcf9.json")
 vcf_json_py = libjson.load_json_variable(vcf_json_str)
 depot_manifest_json_str = libjson.populate_var_from_json_file("json", "depot_manifest.json")
 depot_manifest_json_py = libjson.load_json_variable(depot_manifest_json_str)
@@ -182,6 +182,16 @@ def install_vcf_fleet():
     err = "Depot Settings: "+depot_settings_str
     liblog.write_to_logs(err, logfile_name)
 
+    err = "Deploying VCF Fleet"
+    liblog.write_to_logs(err, logfile_name)
+    err = "VCF JSON"+vcf_json_str
+    liblog.write_to_logs(err, logfile_name)
+    response_json = vcfi.vcf_deploy_sddc('https://'+env_json_py["vcf9_installer_fqdn"]+api_json_py["deploySddc"], token, vcf_json_py)
+    response_json_str = libjson.dump_json(response_json)
+    err = "Deployment Response Status: "+response_json_str
+    liblog.write_to_logs(err, logfile_name)
+
+    print("Login to https://"+env_json_py["vcf9_installer_fqdn"]+" to monitor status of the deployment.")
 
 def lab_env_prompt():
     err = "Kicking off prompt for streamlined lab_environment.json file."

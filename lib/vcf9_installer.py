@@ -36,6 +36,13 @@ def vcf_create_token(url, username, password):
     token = response_json["accessToken"]
     return token
 
+def vcf_deploy_sddc(url, token, vcf_json_py):
+    headers = {"Authorization": f"Bearer {token}", "Accept": "application/json"}
+    response = api_post(url, headers, vcf_json_py)
+    response.raise_for_status()
+    response_json = response.json()
+    return response_json
+
 def vcf_get_depot_settings(url, token):
     headers = {"Authorization": f"Bearer {token}", "Accept": "application/json"}
     response = api_get(url, headers)

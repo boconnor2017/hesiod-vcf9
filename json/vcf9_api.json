@@ -1,6 +1,7 @@
 {
     "version" : "9.0.2.0",
     "createToken" : "/v1/tokens",
+    "deploySddc" : "/v1/sddcs",
     "getDepotSettings" : "/v1/system/settings/depot",
     "getSddcTasks" : "/v1/sddcs"
 }
