@@ -195,6 +195,7 @@ Access your Offline Depot at https://<ip_address>
 
 ## Module 4: Build a VCF 9 Ready Nested Management Cluster
 
+* Prerequisites: VCF Installer is deployed with an online/offline depot, and all binaries are downloaded successfully (Module 3 recommended)
 * Step 1: Upload the ESXi ISO to a datastore on the physical host
 * Step 2: Edit the `lab_environment.json` file (recommended: store this file in `usr/local/drop` for future use)
 * Step 3: Run the following command from Hesiod:
@@ -204,6 +205,8 @@ python3 hesiod-vcf9.py -eoe-mgt
 
 ## Module 5: Deploy VCF 9 Fleet
 
+* Prerequisites: VCF Installer is deployed with an online/offline depot, and all binaries are downloaded successfully (Module 3 recommended)
+* Prerequisites: ESXi Hosts are deployed and Prepped (Module 4 recommended)
 * Step 1: Populate the `json/vcf9.json` file with appropriate VCF 9 configuration details. Use `json/vcf9_config_template.json` as an example if needed.
 ```
 vi json/vcf9.json
