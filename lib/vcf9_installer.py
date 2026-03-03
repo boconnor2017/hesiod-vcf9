@@ -14,6 +14,7 @@ import subprocess
 import base64
 from requests.auth import HTTPBasicAuth
 import json
+import sys
 
 # Custom Functions
 
@@ -54,4 +55,14 @@ def vcf_get_sddc_tasks(url, token):
     response = api_get(url, headers)
     response_json = response.json()
     return response_json
+
+def vcf_validate_depot_connection_status(depot_settings_json_py):
+    if depot_settings_json_py["vmwareAccount"]["status"] != "DEPOT_CONNECTION_SUCCESSFUL":
+        continue_prompt = input("Depot is not connected. Retry? [Y/N]")
+        if continue_prompt == "Y":
+            vcf_validate_depot_connection_status
+        else:
+            sys.exit()
+    else:
+        return True
 

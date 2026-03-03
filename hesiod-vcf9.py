@@ -186,11 +186,11 @@ def install_vcf_fleet():
     liblog.write_to_logs(err, logfile_name)
     err = "VCF JSON"+vcf_json_str
     liblog.write_to_logs(err, logfile_name)
-    response_json = vcfi.vcf_deploy_sddc('https://'+env_json_py["vcf9_installer_fqdn"]+api_json_py["deploySddc"], token, vcf_json_py)
-    response_json_str = libjson.dump_json(response_json)
+    response_json_py = vcfi.vcf_deploy_sddc('https://'+env_json_py["vcf9_installer_fqdn"]+api_json_py["deploySddc"], token, vcf_json_py)
+    response_json_str = libjson.dump_json(response_json_py)
     err = "Deployment Response Status: "+response_json_str
     liblog.write_to_logs(err, logfile_name)
-
+    
     print("Login to https://"+env_json_py["vcf9_installer_fqdn"]+" to monitor status of the deployment.")
 
 def lab_env_prompt():
