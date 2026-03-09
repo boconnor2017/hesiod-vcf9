@@ -182,6 +182,19 @@ def install_vcf_fleet():
     err = "Depot Settings: "+depot_settings_str
     liblog.write_to_logs(err, logfile_name)
 
+    err = "Populating VCF JSON with appropriate SSL Thumbprints"
+    liblog.write_to_logs(err, logfile_name)
+    i=0
+    while i < len(vcf_json_py["hostSpecs"]):
+        err = "    Old SSL Thumbprint for "+vcf_json_py["hostSpecs"][i]["hostname"]+": "+vcf_json_py["hostSpecs"][i]["sslThumbprint"]
+        liblog.write_to_logs(err, logfile_name)
+        sha256_fingerprint = vcfi.get_thumbprint(vcf_json_py["hostSpecs"][i]["hostname"],443)
+        vcf_json_py["hostSpecs"][i]["sslThumbprint"] = sha256_fingerprint
+        err = "    New SSL Thumbprint for "+vcf_json_py["hostSpecs"][i]["hostname"]+": "+vcf_json_py["hostSpecs"][i]["sslThumbprint"]
+        liblog.write_to_logs(err, logfile_name)
+        i=i+1
+    
+    vcf_json_str = libjson.dump_json(vcf_json_py)
     err = "Deploying VCF Fleet"
     liblog.write_to_logs(err, logfile_name)
     err = "VCF JSON"+vcf_json_str

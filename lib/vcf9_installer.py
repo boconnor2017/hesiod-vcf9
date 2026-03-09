@@ -15,6 +15,9 @@ import base64
 from requests.auth import HTTPBasicAuth
 import json
 import sys
+import ssl
+import socket
+import hashlib
 
 # Custom Functions
 
@@ -27,6 +30,17 @@ def api_post(url, headers, payload):
     requests.packages.urllib3.disable_warnings()
     response = requests.post(url, headers=headers, json=payload, verify=False)
     return response
+
+def get_thumbprint(host, port):
+    context = ssl.create_default_context()
+    context.check_hostname = False
+    context.verify_mode = ssl.CERT_NONE
+    with socket.create_connection((host, port)) as sock:
+        with context.wrap_socket(sock, server_hostname=host) as ssock:
+            cert_der = ssock.getpeercert(binary_form=True)
+    fingerprint = hashlib.sha256(cert_der).hexdigest().upper()
+    sha256_fingerprint = ":".join(fingerprint[i:i+2] for i in range(0, len(fingerprint), 2))
+    return sha256_fingerprint
 
 def vcf_create_token(url, username, password):
     headers = {"Content-Type" : "application/json"}
