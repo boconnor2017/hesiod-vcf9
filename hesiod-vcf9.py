@@ -70,7 +70,7 @@ def _main_(args):
     if '-eoe-vi' in args:
         mgt = False
         vi = True
-        err = "   -eoe-mgt found. Initiating ESXi on ESXi (VI cluster)."
+        err = "   -eoe-vi found. Initiating ESXi on ESXi (VI cluster)."
         liblog.write_to_logs(err, logfile_name)
         esxi_on_esxi(mgt, vi)
         sys.exit()
